@@ -2,6 +2,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import { useDrawerContext } from '../shared/contexts';
+import { Dashboard } from '../pages/Dashboard/Dashboard';
 
 
 export const AppRoutes = () => {
@@ -28,7 +29,7 @@ export const AppRoutes = () => {
 
     return (
         <Routes>
-            <Route path="/" element={""} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     );
