@@ -4,6 +4,7 @@ import { AppRoutes } from './routes';
 import { MenuLateral } from './shared/components';
 import { AppThemeProvider } from './shared/contexts/ThemeContext';
 import { DrawerProvider } from './shared/contexts';
+import { Dashboard } from './pages';
 
 export const App = () => {
   return (
@@ -12,9 +13,9 @@ export const App = () => {
       <DrawerProvider>
         <BrowserRouter>
 
-          <MenuLateral>
+          <Dashboard>
             <AppRoutes />
-          </MenuLateral>
+          </Dashboard>
 
         </BrowserRouter>
       </DrawerProvider>

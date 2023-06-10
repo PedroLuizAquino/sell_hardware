@@ -1,6 +1,5 @@
 import { Divider, Drawer, List, ListItemButton, ListItemText, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import { MdDensityMedium } from 'react-icons/md';
 import { useDrawerContext } from "../../contexts";
 
 interface IMenuLateral {
@@ -35,43 +34,41 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
 
     return (
         <>
-            <Drawer open={isDrawerOpen}
-                variant={smDown ? 'temporary' : "permanent"}
-                onClose={toggleDrawerOpen}
-            >
-                <Box
-                    width={theme.spacing(28)}
-                    display={"flex"}
-                    flexDirection={"column"}
-                    height={'100%'}
+            <Box sx={{ display: 'flex' }}>
+                <Drawer open={isDrawerOpen}
+                    variant={smDown ? 'temporary' : "persistent"}
+                    onClose={toggleDrawerOpen}
+                    className="Drawer"
+                    sx={{
+                        zIndex: 0,
+                    }}
                 >
                     <Box
-                        width={"100%"}
-                        height={theme.spacing(4)}
-                        padding={'10px'}
-                        display={'flex'}
+                        width={theme.spacing(28)}
+                        display={"flex"}
+                        flexDirection={"column"}
+                        height={'100%'}
+                        marginTop={theme.spacing(6)}
                     >
-                        <MdDensityMedium size={'2em'} onClick={toggleDrawerOpen} />
-                    </Box>
-                    <Divider />
-                    <Box flex={1}>
-                        <List component={'nav'}>
-                            {drawerOptions.map(drawerOption => (
-                                <ListItemFilter
-                                    key={drawerOption.id}
-                                    label={drawerOption.label}
-                                    onClick={undefined}
+                        <Box flex={1}>
+                            <List component={'nav'}>
+                                {drawerOptions.map(drawerOption => (
+                                    <ListItemFilter
+                                        key={drawerOption.id}
+                                        label={drawerOption.label}
+                                        onClick={undefined}
 
-                                />
-                            ))}
-                        </List>
+                                    />
+                                ))}
+                            </List>
+                        </Box>
                     </Box>
+                </Drawer>
+
+                <Box height={"100%"} marginTop={theme.spacing(8)} marginLeft={smDown ? theme.spacing(4) : isDrawerOpen ? theme.spacing(30) : theme.spacing(4)} sx={{ flexGrow: 3 }}>
+                    {children}
                 </Box>
-            </Drawer>
-            <Box height={"100"} marginLeft={smDown ? 0 : theme.spacing(28)}>
-                {children}
             </Box>
         </>
-
-    )
-} 
+    );
+};
