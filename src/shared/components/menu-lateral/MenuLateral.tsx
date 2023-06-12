@@ -1,4 +1,4 @@
-import { Divider, Drawer, List, ListItemButton, ListItemText, useMediaQuery, useTheme } from "@mui/material";
+import { Typography, Drawer, List, ListItemButton, ListItemText, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../../contexts";
 
@@ -48,16 +48,20 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
                         display={"flex"}
                         flexDirection={"column"}
                         height={'100%'}
-                        marginTop={theme.spacing(6)}
+                        marginTop={12}
                     >
-                        <Box flex={1}>
+                        <Box padding={1}>
+                            <Typography  >
+                                Categorias
+                            </Typography>
+                        </Box>
+                        <Box flex={1} padding={1}>
                             <List component={'nav'}>
                                 {drawerOptions.map(drawerOption => (
                                     <ListItemFilter
                                         key={drawerOption.id}
                                         label={drawerOption.label}
                                         onClick={undefined}
-
                                     />
                                 ))}
                             </List>
@@ -65,7 +69,7 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
                     </Box>
                 </Drawer>
 
-                <Box height={"100%"} marginTop={theme.spacing(8)} marginLeft={smDown ? theme.spacing(4) : isDrawerOpen ? theme.spacing(30) : theme.spacing(4)} sx={{ flexGrow: 3 }}>
+                <Box flex={1} overflow={'auto'} marginTop={10} marginLeft={smDown ? theme.spacing(4) : isDrawerOpen ? theme.spacing(30) : theme.spacing(4)} sx={{ flexGrow: 3 }}>
                     {children}
                 </Box>
             </Box>
