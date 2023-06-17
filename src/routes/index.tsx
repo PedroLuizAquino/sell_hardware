@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import { useDrawerContext } from '../shared/contexts';
 import { Dashboard } from '../pages/Dashboard/Dashboard';
+import { Login } from '../pages/forms/Login/Login';
 
 
 export const AppRoutes = () => {
@@ -30,6 +31,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<p> sdjiadjidadjaioadjiodaj</p>} />
+            <Route path='/Login' element={<Login />} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     );

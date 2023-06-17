@@ -5,18 +5,23 @@ import logo from './logo_sellhardware.png';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, TextField, Button, Paper, InputAdornment, Icon, InputBase, IconButton, useMediaQuery, Avatar } from '@mui/material';
 import { useState } from 'react';
+import { Enviroment } from '../envionment';
 
 
 interface INavebar {
     children?: React.ReactNode;
+    textoBusca?: string;
+    aoMudarTextoBusca?: (novoTexto: string) => void;
 }
 
-export const Navbar: React.FC<INavebar> = ({ children }) => {
+export const Navbar: React.FC<INavebar> = ({
+    children,
+    textoBusca = '',
+    aoMudarTextoBusca,
+}) => {
     const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
     const navigate = useNavigate();
-    const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-    const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
     const handleClickSearch = () => {
     }
     return (
@@ -42,7 +47,7 @@ export const Navbar: React.FC<INavebar> = ({ children }) => {
                     <Box component={Button} display={'flex'}>
                         <MdDensityMedium color='#ffffff' size={'2.5rem'} onClick={toggleDrawerOpen} style={{ cursor: "pointer" }} />
                     </Box>
-                    <Box component={Button} onClick={handleClickSearch} display={'flex'}>
+                    <Box component={Button} onClick={() => navigate('/')} display={'flex'}>
                         <img src={logo} width={"50px"} alt='Logo Sell Hardware' />
                     </Box>
                 </Box>
@@ -58,7 +63,9 @@ export const Navbar: React.FC<INavebar> = ({ children }) => {
                 >
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
-                        placeholder="Pesquisar"
+                        placeholder={Enviroment.INPUT_DE_BUSCA}
+                        value={textoBusca}
+                        onChange={(e) => aoMudarTextoBusca?.(e.target.value)}
                         inputProps={{ 'aria-label': 'Pesquisar' }}
                     />
                     <IconButton type="button" sx={{ p: '10px' }} aria-label="Pesquisar">
@@ -74,7 +81,6 @@ export const Navbar: React.FC<INavebar> = ({ children }) => {
                     alignItems={'center'}
                 >
                     <Avatar>
-
                     </Avatar>
                 </Box>
             </Box>
