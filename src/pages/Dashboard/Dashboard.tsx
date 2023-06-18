@@ -4,11 +4,11 @@ import { Navbar } from "../../shared/layouts/Navbar"
 
 
 
-interface IDashboard {
+type DashboardProps = {
     children: React.ReactNode;
 }
 
-export const Dashboard = ({ children }: IDashboard) => {
+export const Dashboard = ({ children }: DashboardProps) => {
     return (
 
 

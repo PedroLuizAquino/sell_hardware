@@ -2,17 +2,17 @@ import { Typography, Drawer, List, ListItemButton, ListItemText, useMediaQuery, 
 import { Box } from "@mui/system";
 import { useDrawerContext } from "../../contexts";
 
-interface IMenuLateral {
+type MenuLateralProps = {
     children: React.ReactNode;
 }
 
-interface IListItemFilterProps {
+type ListItemFilterProps = {
     label: string;
     filter?: string;
     onClick: (() => void) | undefined;
 }
 
-const ListItemFilter = ({ label, filter, onClick }: IListItemFilterProps) => {
+const ListItemFilter = ({ label, filter, onClick }: ListItemFilterProps) => {
 
 
 
@@ -27,7 +27,7 @@ const ListItemFilter = ({ label, filter, onClick }: IListItemFilterProps) => {
     );
 }
 
-export const MenuLateral = ({ children }: IMenuLateral) => {
+export const MenuLateral = ({ children }: MenuLateralProps) => {
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();

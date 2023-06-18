@@ -3,12 +3,12 @@ import { ThemeProvider } from '@emotion/react';
 import { LightTheme } from "../themes";
 import { Box } from "@mui/system";
 
-interface IThemeContextData {
+type ThemeContextProps = {
     themeName: 'light';
 
 }
 
-const ThemeContext = createContext({} as IThemeContextData)
+const ThemeContext = createContext({} as ThemeContextProps)
 
 
 export const useAppThemeContext = () => {
@@ -16,11 +16,11 @@ export const useAppThemeContext = () => {
 }
 
 
-interface IAppThemeProvider {
+type AppThemeProviderProps = {
     children: React.ReactNode;
 
 }
-export const AppThemeProvider = ({ children }: IAppThemeProvider) => {
+export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
     const [themeName] = useState<'light'>('light');
     return (
         <ThemeContext.Provider value={{ themeName }} >

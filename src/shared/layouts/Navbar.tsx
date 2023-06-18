@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Enviroment } from '../envionment';
 
 
-interface INavebar {
+type NavebarProps = {
     children?: React.ReactNode;
     textoBusca?: string;
     aoMudarTextoBusca?: (novoTexto: string) => void;
@@ -18,7 +18,7 @@ export const Navbar = ({
     children,
     textoBusca = '',
     aoMudarTextoBusca,
-}: INavebar) => {
+}: NavebarProps) => {
     const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
     const navigate = useNavigate();
