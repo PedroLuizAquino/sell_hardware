@@ -8,7 +8,7 @@ interface IDashboard {
     children: React.ReactNode;
 }
 
-export const Dashboard: React.FC<IDashboard> = ({ children }) => {
+export const Dashboard = ({ children }: IDashboard) => {
     return (
 
 

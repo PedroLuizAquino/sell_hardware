@@ -12,7 +12,7 @@ interface IListItemFilterProps {
     onClick: (() => void) | undefined;
 }
 
-const ListItemFilter: React.FC<IListItemFilterProps> = ({ label, filter, onClick }) => {
+const ListItemFilter = ({ label, filter, onClick }: IListItemFilterProps) => {
 
 
 
@@ -27,7 +27,7 @@ const ListItemFilter: React.FC<IListItemFilterProps> = ({ label, filter, onClick
     );
 }
 
-export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
+export const MenuLateral = ({ children }: IMenuLateral) => {
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();

@@ -25,7 +25,7 @@ interface IDrawerProvider {
     children: React.ReactNode;
 
 }
-export const DrawerProvider: React.FC<IDrawerProvider> = ({ children }) => {
+export const DrawerProvider = ({ children }: IDrawerProvider) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [drawerOptions, setDrawerOptions] = useState<iDrawerOption[]>([]);
 

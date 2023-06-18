@@ -14,11 +14,11 @@ interface INavebar {
     aoMudarTextoBusca?: (novoTexto: string) => void;
 }
 
-export const Navbar: React.FC<INavebar> = ({
+export const Navbar = ({
     children,
     textoBusca = '',
     aoMudarTextoBusca,
-}) => {
+}: INavebar) => {
     const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
     const navigate = useNavigate();

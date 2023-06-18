@@ -20,7 +20,7 @@ interface IAppThemeProvider {
     children: React.ReactNode;
 
 }
-export const AppThemeProvider: React.FC<IAppThemeProvider> = ({ children }) => {
+export const AppThemeProvider = ({ children }: IAppThemeProvider) => {
     const [themeName] = useState<'light'>('light');
     return (
         <ThemeContext.Provider value={{ themeName }} >
