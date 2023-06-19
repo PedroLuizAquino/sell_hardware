@@ -1,26 +1,25 @@
-import { Enviroment } from "../../../envionment";
 import { API } from "../axios";
 
-interface IAnuncio {
-    id: number;
-    titulo: string
-    date: Date;
+export interface IAnuncios {
+    identify: number;
+    titulo: string;
     quantidade: number;
     descricao: string;
     preco: number;
-    condicao: string;
-    userid:number;
-    mediaNotas: number;
-    mediaVotos: number;
-    produtoId: number;
-    ativo: boolean;
+    status_anuncio: boolean;
+    condicao_produto: string;
+    mediaNotas: number | null;
+    mediaVotos: number | null;
+    observacoes: string;
+    id_produto: number;
+    id_usuario: number;
 }
 
 
-const getAnuncioAll = async (): Promise<IAnuncio[] | Error> => {
+const getAnuncioAll = async (): Promise<IAnuncios[] | Error> => {
     try{
 
-        const {data} = await API.get(`/buscaAnuncio`);
+        const {data} = await API.get(`/listarAnuncio`);
 
         if(data) {
             return data;
@@ -36,10 +35,10 @@ const getAnuncioAll = async (): Promise<IAnuncio[] | Error> => {
     }
 };
 
-const getAnuncioById = async (id: number): Promise<IAnuncio | Error> => {
+const getAnuncioById = async (id: number): Promise<IAnuncios | Error> => {
     try{
 
-        const{data} = await API.get(`/buscaAnuncio/${id}`);
+        const{data} = await API.get(`/listarAnuncio/${id}`);
 
         if(data){
             return data.id;
@@ -50,17 +49,33 @@ const getAnuncioById = async (id: number): Promise<IAnuncio | Error> => {
 
         return new Error((error as {message: string}).message || error.message);
     }
-
 };
 
-const createAnuncio = async (dados: Omit<IAnuncio, 'id'>): Promise<number | Error> => {
+const filtroAnuncio = async (filter : string) : Promise<IAnuncios[] | Error> => {
+    try{
+
+        const{data} = await API.get(`/filtrarAnuncio/?titulo=${filter}`);
+
+        if(data){
+            return data;
+        }
+
+        return new Error('Erro ao filtrar o anuncio.');
+    }catch(error: any){
+
+        return new Error((error as {message: string}).message || error.message);
+    }
+}
+
+
+const createAnuncio = async (dados: Omit<IAnuncios, 'id'>): Promise<number | Error> => {
 
     try{
 
-        const{data} = await API.post<IAnuncio>('/criarAnuncio', dados);
+        const{data} = await API.post<IAnuncios>('/criarAnuncio', dados);
 
         if(data){
-            return data.id;
+            return data.identify;
         }
 
         return new Error('Erro ao criar o anuncio.');
@@ -70,10 +85,10 @@ const createAnuncio = async (dados: Omit<IAnuncio, 'id'>): Promise<number | Erro
     }
 };
 
-const updateAnuncio = async (id: number, dados: IAnuncio): Promise<void | Error> => {
+const updateAnuncio = async (id: number, dados: IAnuncios): Promise<void | Error> => {
     try{
         
-        await API.put(`/anunciar/${id}`, dados);
+        await API.put(`/alterarAnuncio/${id}`, dados);
 
     }catch(error){
 
@@ -84,7 +99,7 @@ const updateAnuncio = async (id: number, dados: IAnuncio): Promise<void | Error>
 const deleteAnuncio = async (id: number): Promise<void | Error> => {
     try{
         
-        await API.delete(`/anunciar/${id}`);
+        await API.delete(`/deleteAnuncio/${id}`);
 
     }catch(error){
 
@@ -92,10 +107,11 @@ const deleteAnuncio = async (id: number): Promise<void | Error> => {
     }
 };
 
-export const ProdutosService = {
+export const AnuncioService = {
 
     getAnuncioAll,
     getAnuncioById,
+    filtroAnuncio,
     createAnuncio,
     updateAnuncio,
     deleteAnuncio,    

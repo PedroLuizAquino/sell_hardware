@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme, TextField, Button, Paper, InputAdornment, Icon, InputBase, IconButton, useMediaQuery, Avatar } from '@mui/material';
 import { useState } from 'react';
 import { Enviroment } from '../envionment';
+import { AnuncioService, IAnuncios } from '../services/api/anuncios/AnuncioService';
+import { toast } from 'react-toastify';
+import { error } from 'console';
 
 
 type NavebarProps = {
@@ -22,8 +25,23 @@ export const Navbar = ({
     const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
     const navigate = useNavigate();
+
     const handleClickSearch = () => {
+        if (!textoBusca) {
+            return;
+        }
+        AnuncioService.filtroAnuncio(textoBusca)
+            .then((result) => {
+                if (result instanceof Error) {
+                    alert(result.message);
+                    return
+                } else {
+                    //setCardAnuncio(result);
+
+                }
+            })
     }
+
     return (
         <>
 
@@ -47,7 +65,7 @@ export const Navbar = ({
                     <Box component={Button} display={'flex'}>
                         <MdDensityMedium color='#ffffff' size={'2.5rem'} onClick={toggleDrawerOpen} style={{ cursor: "pointer" }} />
                     </Box>
-                    <Box component={Button} onClick={() => navigate('/')} display={'flex'}>
+                    <Box component={Button} onClick={() => navigate('/sellhardware')} display={'flex'}>
                         <img src={logo} width={"50px"} alt='Logo Sell Hardware' />
                     </Box>
                 </Box>
@@ -68,7 +86,7 @@ export const Navbar = ({
                         onChange={(e) => aoMudarTextoBusca?.(e.target.value)}
                         inputProps={{ 'aria-label': 'Pesquisar' }}
                     />
-                    <IconButton type="button" sx={{ p: '10px' }} aria-label="Pesquisar">
+                    <IconButton type="button" sx={{ p: '10px' }} aria-label="Pesquisar" onClick={handleClickSearch}>
                         <MdSearch />
                     </IconButton>
                 </Box>
@@ -80,8 +98,8 @@ export const Navbar = ({
                     display={'flex'}
                     alignItems={'center'}
                 >
-                    <Avatar>
-                    </Avatar>
+                    <Avatar />
+
                 </Box>
             </Box>
             <Box>

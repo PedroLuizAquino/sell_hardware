@@ -2,7 +2,7 @@ import { Enviroment } from "../../../envionment";
 import { API } from "../axios";
 
 
-interface IListagemProduto {
+export interface IProdutos {
     id: number;
     titulo: string
     date: Date;
@@ -16,36 +16,14 @@ interface IListagemProduto {
     ativo: boolean;
 }
 
-interface IDetalheProduto {
-    id: number;
-    titulo: string
-    date: Date;
-    quantidade: number;
-    descricao: string;
-    condicao: string;
-    userid:number;
-    mediaNotas: number;
-    meidaVotos: number;
-    produtoid: number;
-    ativo: boolean;
-}
-
-type TProdutoComTotalCount = {
-    data: IListagemProduto[];
-    totalCount: number;
-}
-
-const getProdutoAll = async (page = 1, filter=''): Promise<TProdutoComTotalCount | Error> => {
+const getProdutoAll = async (page = 1, filter=''): Promise<IProdutos[] | Error> => {
     try{
-        const urlRelativa = `/buscaProduto?_page=${page}&_limit=${Enviroment.LIMITE_DE_LINHAS}&titulo_like=${filter}`;
+        const urlRelativa = `/buscaProduto`;
 
         const {data, headers} = await API.get(urlRelativa);
 
         if(data) {
-            return {
-                data,
-                totalCount: headers['x-total-count'] || Enviroment.LIMITE_DE_LINHAS,
-            };
+            return data
         }
         
         return new Error('Erro ao listar os anuncios.');
@@ -56,7 +34,40 @@ const getProdutoAll = async (page = 1, filter=''): Promise<TProdutoComTotalCount
     }
 };
 
-const getProdutoById = async (id: number): Promise<IDetalheProduto | Error> => {
+const getProdutoById = async (id: number): Promise<IProdutos | Error> => {
+    try{
+
+        const{data} = await API.get(`/buscaProduto/${id}`);
+
+        if(data){
+            return data;
+        }
+
+        return new Error('Erro ao visualizar o anuncio.');
+    }catch(error){
+
+        return new Error((error as {message: string}).message || 'Erro ao vizualizar o anuncio.');
+    }
+
+};
+const getProdutoByNome = async (nome: string): Promise<IProdutos | Error> => {
+    try{
+
+        const{data} = await API.get(`/buscaProduto/${nome}`);
+
+        if(data){
+            return data;
+        }
+
+        return new Error('Erro ao visualizar o anuncio.');
+    }catch(error){
+
+        return new Error((error as {message: string}).message || 'Erro ao vizualizar o anuncio.');
+    }
+
+};
+
+const getProdutoByCategoria = async (id: number): Promise<IProdutos | Error> => {
     try{
 
         const{data} = await API.get(`/buscaProduto/${id}`);
@@ -73,11 +84,11 @@ const getProdutoById = async (id: number): Promise<IDetalheProduto | Error> => {
 
 };
 
-const createProduto = async (dados: Omit<IDetalheProduto, 'id'>): Promise<number | Error> => {
+const createProduto = async (dados: Omit<IProdutos, 'id'>): Promise<number | Error> => {
 
     try{
 
-        const{data} = await API.post<IDetalheProduto>('/anunciar', dados);
+        const{data} = await API.post<IProdutos>('/anunciar', dados);
 
         if(data){
             return data.id;
@@ -90,7 +101,7 @@ const createProduto = async (dados: Omit<IDetalheProduto, 'id'>): Promise<number
     }
 };
 
-const updateProduto = async (id: number, dados: IDetalheProduto): Promise<void | Error> => {
+const updateProduto = async (id: number, dados: IProdutos): Promise<void | Error> => {
     try{
         
         await API.put(`/anunciar/${id}`, dados);

@@ -2,121 +2,104 @@ import { Enviroment } from "../../../envionment";
 import { API } from "../axios";
 
 
-interface IListagemUser {
-    id: number;
-    titulo: string
-    date: Date;
-    quantidade: number;
-    descricao: string;
-    condicao: string;
-    userid:number;
-    mediaNotas: number;
-    meidaVotos: number;
-    produtoid: number;
-    ativo: boolean;
+export interface IUsuarios {
+    identify: number;
+    nome: string;
+    senha:string;
+    email: string;
+    celular: number;
+    rua: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
 }
 
-interface IDetalheUser {
-    id: number;
-    titulo: string
-    date: Date;
-    quantidade: number;
-    descricao: string;
-    condicao: string;
-    userid:number;
-    mediaNotas: number;
-    meidaVotos: number;
-    produtoid: number;
-    ativo: boolean;
-}
-
-type TUserComTotalCount = {
-    data: IListagemUser[];
-    totalCount: number;
-}
-
-const getUserAll = async (page = 1, filter=''): Promise<TUserComTotalCount | Error> => {
+const getUserAll = async (filter: string): Promise<IUsuarios[] | Error> => {
     try{
-        const urlRelativa = `/anunciar?_page=${page}&_limit=${Enviroment.LIMITE_DE_LINHAS}&titulo_like=${filter}`;
-
-        const {data, headers} = await API.get(urlRelativa);
+        const {data} = await API.get(`/listarUsuario/`);
 
         if(data) {
-            return {
-                data,
-                totalCount: headers['x-total-count'] || Enviroment.LIMITE_DE_LINHAS,
-            };
-        }
+            return data
+        };
         
-        return new Error('Erro ao listar os anuncios.');
+        return new Error('Erro ao listar os usuarios.');
 
     }catch(error){
         console.error(error);
-        return new Error((error as {message: string}).message || 'Erro ao listar os anuncios.');
+        return new Error((error as {message: string}).message || 'Erro ao listar os usuarios.');
     }
 };
 
-const getUserById = async (id: number): Promise<IDetalheUser | Error> => {
+const getUsuarioById = async (id: number): Promise<IUsuarios | Error> => {
     try{
 
-        const{data} = await API.get(`/anunciar/${id}`);
+        const{data} = await API.get(`/listarUsuario${id}`);
 
         if(data){
             return data;
         }
 
-        return new Error('Erro ao visualizar o anuncio.');
+        return new Error('Erro ao visualizar o usuario.');
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao vizualizar o anuncio.');
+        return new Error((error as {message: string}).message || 'Erro ao vizualizar o usuario.');
     }
 
 };
 
-const createUser = async (dados: Omit<IDetalheUser, 'id'>): Promise<number | Error> => {
+const cadastroUsuario = async (dados: Omit<IUsuarios, 'id'>): Promise<number | Error> => {
 
     try{
 
-        const{data} = await API.post<IDetalheUser>('/anunciar', dados);
+        const{data} = await API.post<IUsuarios>('/cadastroUsuario', dados);
 
         if(data){
-            return data.id;
+            return data.identify;
         }
 
-        return new Error('Erro ao criar o anuncio.');
+        return new Error('Erro ao criar o usuario.');
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao criar o anuncio.');
+        return new Error((error as {message: string}).message || 'Erro ao criar o usuario.');
     }
 };
 
-const modifyUser = async (id: number, dados: IDetalheUser): Promise<void | Error> => {
+const loginUsuario =async () => { //post 
+ };
+
+const logoutUsuario = async () => {
+    //post
+};
+
+const modifyUser = async (id: number, dados: IUsuarios): Promise<void | Error> => {
     try{
         
-        await API.put(`/anunciar/${id}`, dados);
+        await API.put(`/alterarUsuario/${id}`, dados);
 
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao atualizar o anuncio.');
+        return new Error((error as {message: string}).message || 'Erro ao atualizar o usuario.');
     }
 };
 
 const deleteUser = async (id: number): Promise<void | Error> => {
     try{
         
-        await API.delete(`/anunciar/${id}`);
+        await API.delete(`/deleteUsuario/${id}`);
 
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao apagar o anuncio.');
+        return new Error((error as {message: string}).message || 'Erro ao apagar o usuario.');
     }
 };
 
-export const ProdutosService = {
+export const UsersService = {
 
     getUserAll,
-    getUserById,
-    createUser,
+    getUsuarioById,
+    cadastroUsuario,    
+    loginUsuario,
+    logoutUsuario,
     modifyUser,
     deleteUser,    
 };

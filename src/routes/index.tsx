@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDrawerContext } from '../shared/contexts';
 import { Dashboard } from '../pages/Dashboard/Dashboard';
 import { Login } from '../pages/forms/Login/Login';
+import { Home } from '../pages';
 
 
 export const AppRoutes = () => {
@@ -14,25 +15,25 @@ export const AppRoutes = () => {
         setDrawerOption([
             {
                 id: 1,
-                label: "hardware",
+                label: "processador",
             },
             {
                 id: 2,
-                label: "pedro",
+                label: "armazenamento",
             },
             {
                 id: 3,
-                label: "projeto",
+                label: "memoria",
             }
         ])
-
     }, [])
 
     return (
         <Routes>
-            <Route path="/" element={<p> sdjiadjidadjaioadjiodaj</p>} />
+            <Route path="/sellhardware" element={<Home />} />
+            <Route path="/anuncio/detalhe/:id" element={<Home />} />
             <Route path='/Login' element={<Login />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/sellhardware" />} />
         </Routes>
     );
 }
