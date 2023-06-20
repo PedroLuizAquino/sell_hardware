@@ -16,16 +16,26 @@ export interface IAnuncios {
 }
 
 
+
+export async function getAnuncioAll2(): Promise<IAnuncios[]>{
+   
+    const data = await API.get(`/listarAnuncio`)
+    .then((data)=>{
+        return data;
+    })
+    .catch((err) => err.message);
+    return data;
+}
+
 const getAnuncioAll = async (): Promise<IAnuncios[] | Error> => {
     try{
 
         const {data} = await API.get(`/listarAnuncio`);
 
         if(data) {
-            return data;
+           return data.json()
         }
-        
-        console.log(data)
+       
 
         return new Error('Erro ao listar os anuncios.');
 
@@ -110,6 +120,7 @@ const deleteAnuncio = async (id: number): Promise<void | Error> => {
 export const AnuncioService = {
 
     getAnuncioAll,
+    getAnuncioAll2,
     getAnuncioById,
     filtroAnuncio,
     createAnuncio,

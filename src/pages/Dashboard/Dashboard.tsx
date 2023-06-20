@@ -17,9 +17,6 @@ export const Dashboard = ({ children }: DashboardProps) => {
         return searchParams.get('busca') || '';
     }, [searchParams]);
     return (
-
-
-
         <Navbar
             textoBusca={busca}
             aoMudarTextoBusca={texto => setSearchParams({ busca: texto }, { replace: true })}

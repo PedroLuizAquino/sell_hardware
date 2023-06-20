@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { MdDensityMedium, MdSearch } from 'react-icons/md';
-import { useDrawerContext } from '../contexts';
+import { useCardContext, useDrawerContext } from '../contexts';
 import logo from './logo_sellhardware.png';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, TextField, Button, Paper, InputAdornment, Icon, InputBase, IconButton, useMediaQuery, Avatar } from '@mui/material';
@@ -24,6 +24,7 @@ export const Navbar = ({
 }: NavebarProps) => {
     const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
+    const [cardAnuncio, setCardAnuncio] = useState<IAnuncios[]>([]);
     const navigate = useNavigate();
 
     const handleClickSearch = () => {
@@ -36,7 +37,7 @@ export const Navbar = ({
                     alert(result.message);
                     return
                 } else {
-                    //setCardAnuncio(result);
+                    setCardAnuncio(result);
 
                 }
             })
