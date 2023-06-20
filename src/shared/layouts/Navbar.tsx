@@ -1,14 +1,14 @@
 import { Box } from '@mui/system';
 import { MdDensityMedium, MdSearch } from 'react-icons/md';
-import { useCardContext, useDrawerContext } from '../contexts';
+import { useDrawerContext } from '../contexts';
 import logo from './logo_sellhardware.png';
 import { useNavigate } from 'react-router-dom';
-import { useTheme, TextField, Button, Paper, InputAdornment, Icon, InputBase, IconButton, useMediaQuery, Avatar } from '@mui/material';
+import { useTheme, Button, Paper, InputBase, IconButton, Avatar, Menu } from '@mui/material';
 import { useState } from 'react';
 import { Enviroment } from '../envionment';
 import { AnuncioService, IAnuncios } from '../services/api/anuncios/AnuncioService';
-import { toast } from 'react-toastify';
-import { error } from 'console';
+import { MdStore, MdSell, MdOutlineSell } from "react-icons/md";
+
 
 
 type NavebarProps = {
@@ -45,7 +45,6 @@ export const Navbar = ({
 
     return (
         <>
-
             <Box
                 bgcolor={"#465EFF"}
                 width={"100vw"}
@@ -95,11 +94,22 @@ export const Navbar = ({
                     padding={1}
                     paddingY={2}
                     margin={1}
+                    marginRight={2}
                     justifyContent={'end'}
                     display={'flex'}
                     alignItems={'center'}
                 >
-                    <Avatar />
+                    <Box padding={3}>
+                        <Button color='primary' variant='contained' endIcon={<MdSell />}>
+                            Anuncie Aqui
+                        </Button>
+                    </Box>
+                    <Box padding={1}>
+                        <IconButton sx={{ p: 0 }}>
+                            <Avatar />
+
+                        </IconButton>
+                    </Box>
 
                 </Box>
             </Box>

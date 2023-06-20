@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { API } from "../axios";
 
 export interface IAnuncios {
@@ -17,33 +18,23 @@ export interface IAnuncios {
 
 
 
-export async function getAnuncioAll2(): Promise<IAnuncios[]>{
-   
-    const data = await API.get(`/listarAnuncio`)
-    .then((data)=>{
-        return data;
-    })
-    .catch((err) => err.message);
-    return data;
-}
-
-const getAnuncioAll = async (): Promise<IAnuncios[] | Error> => {
-    try{
-
-        const {data} = await API.get(`/listarAnuncio`);
-
-        if(data) {
-           return data.json()
-        }
-       
-
-        return new Error('Erro ao listar os anuncios.');
-
-    }catch(error: any){
-        console.error(error);
-        return new Error((error as {message: string}).message || error.message);
+const getAnuncioAll = async (): Promise<IAnuncios[]> => {
+    try {
+    const { data } = await API.get('/listarAnuncio');
+ 
+  
+      if (Array.isArray(data.data)) {
+        return data.data;
+      }
+  
+    new Error('Erro ao listar os anuncios.');
+    return []
+    } catch (error: any) {
+      new Error((error as { message: string }).message || error.message);
+      return []
     }
-};
+  };
+  
 
 const getAnuncioById = async (id: number): Promise<IAnuncios | Error> => {
     try{
@@ -120,7 +111,6 @@ const deleteAnuncio = async (id: number): Promise<void | Error> => {
 export const AnuncioService = {
 
     getAnuncioAll,
-    getAnuncioAll2,
     getAnuncioById,
     filtroAnuncio,
     createAnuncio,
