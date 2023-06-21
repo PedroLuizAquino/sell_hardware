@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { UsersService } from '../../../shared/services/api/users/UsersService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { condicaoProdutoOptions, observacoesAnuncioOptions } from '../../../shared/hooks/OptionsProduto';
 
 const CreateUserSchema = yup.object().shape({
     nome: yup.string().required(),
@@ -13,56 +14,16 @@ const CreateUserSchema = yup.object().shape({
 });
 
 export const AnuncioProduto = () => {
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [condicao, setCondicao] = useState('');
+    const [observacao, setObservacao] = useState('');
+    const [quantidade, setQuantidade] = useState(0);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
 
 
     const handleCreateUser = () => {
         setIsLoading(true)
-        CreateUserSchema
-            .validate({ email, password, nome }, { abortEarly: false })
-            .then(dadosValidados => {
-                const fetchData = async () => {
-                    setIsLoading(true);
-                    const result = await UsersService.cadastroUsuario({
-                        nome: nome,
-                        senha: password,
-                        email: email,
-                    })
-                    setIsLoading(false);
-                    if (result instanceof Error) {
-                        console.log('deu errado', result)
-                        toast.error('Erro ao cadastrar')
-                    } else {
-                        console.log('deu certo', result)
-                        toast.success('Usuario Criado com sucesso')
-                        navigate('/login')
-                    }
-                }
-                fetchData();
-            })
-            .catch((errors: yup.ValidationError) => {
-                setIsLoading(false)
-                errors.inner.forEach(error => {
-                    if (error.path === 'email') {
-                        setEmailError('Email Invalido');
-                    } else if (error.path === 'password') {
-                        setPasswordError('Senha Invalido')
-                    }
 
-                    if (password !== confirmPassword) {
-                        setPasswordError('As senhas não se conhecidem')
-                        setConfirmPasswordError('As senhas não se conhecidem')
-                    }
-                })
-            })
     }
 
 
@@ -99,7 +60,9 @@ export const AnuncioProduto = () => {
                         />
 
                         <Autocomplete
-                            options={[]}
+                            options={condicaoProdutoOptions}
+                            value={condicao}
+                            onInputChange={(_, newValue) => setCondicao(newValue)}
                             renderInput={(params) =>
                                 <TextField {...params} label='Condição' />
                             }
@@ -107,15 +70,19 @@ export const AnuncioProduto = () => {
                         <TextField
                             label="Quantidade"
                             type="number"
+                            value={quantidade}
+                            onChange={e => setQuantidade(Number(e.target.value))}
                             InputLabelProps={{
                                 shrink: true,
                             }}
                         />
-                        <TextField
-                            label="Observacoes"
-                            multiline
-                            rows={4}
-
+                        <Autocomplete
+                            options={observacoesAnuncioOptions}
+                            value={observacao}
+                            onInputChange={(_, newValue) => setObservacao(newValue)}
+                            renderInput={(params) =>
+                                <TextField {...params} label='Condição' />
+                            }
                         />
                     </Box>
 
@@ -136,7 +103,7 @@ export const AnuncioProduto = () => {
                                             size={20}
                                         />
                                         : undefined
-                                }>Cadastrar</Button>
+                                }>Anunciar</Button>
                         </Box>
                     </Box>
                 </CardActions>

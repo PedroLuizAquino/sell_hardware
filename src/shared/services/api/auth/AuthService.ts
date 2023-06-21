@@ -1,3 +1,4 @@
+import { boolean } from "yup";
 import { API } from "../axios";
 
 export interface IAuth {
@@ -11,10 +12,10 @@ const loginUsuario = async (email: string, senha: string): Promise<IAuth | Error
 
         const{data} = await API.post(`/login`, { email: email, senha: senha });
 
-        if(data){
+        if(Boolean(data) === true){
+            console.log('data', data )
             return data;
-        }
-
+        } 
         return new Error('Erro no login.');
     }catch(error: any){
 

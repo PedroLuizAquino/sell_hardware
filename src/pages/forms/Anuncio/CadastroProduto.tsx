@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { Card, CardContent, CardActions, Button, CircularProgress, TextField, Typography, Autocomplete } from "@mui/material"
 import { Box } from "@mui/system"
+import { capacidadeProdutoOptions, categoriaProdutoOptions, componenteProdutoOptions, fabricanteProdutoOptions, marcaProdutoOptions, tipoProdutoOptions } from '../../../shared/hooks/OptionsProduto';
 
 
 export const CadastroProduto = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [componente, setComponente] = useState('');
+    const [fabricante, setFabricante] = useState('');
+    const [marca, setMarca] = useState('');
+    const [tipo, setTipo] = useState('');
+    const [capacidade, setCapacidade] = useState('');
+    const [categoria, setCategoria] = useState('');
     const [isLoading, setIsLoading] = useState(false)
 
 
     const handleCreateAnuncio = () => {
-
+        console.log('componente', componente)
+        console.log('fabricante', fabricante)
+        console.log('marca', marca)
+        console.log('tipo', tipo)
+        console.log('capacidade', capacidade)
+        console.log('categoria', categoria)
     }
 
     return (
@@ -45,45 +53,73 @@ export const CadastroProduto = () => {
 
                         <Autocomplete
                             id='componente'
-                            options={[]}
+                            options={componenteProdutoOptions}
+                            value={componente}
+                            onInputChange={(_, newValue) => setComponente(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Componente' />
+                                <TextField {...params} label='Componente'
+                                />
                             }
                         />
 
                         <Autocomplete
                             id='fabricante'
-                            options={[]}
+                            options={fabricanteProdutoOptions}
+                            value={fabricante}
+                            onInputChange={(_, newValue) => setFabricante(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Fabricante' />
+                                <TextField {...params} label='Fabricante'
+                                    value={fabricante}
+                                    onChange={e => setFabricante(e.target.value)}
+                                />
                             }
                         />
                         <Autocomplete
                             id='marca'
-                            options={[]}
+                            options={marcaProdutoOptions}
+                            value={marca}
+                            onInputChange={(_, newValue) => setMarca(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Marca' />
+                                <TextField {...params} label='Marca'
+                                    value={marca}
+                                    onChange={e => setMarca(e.target.value)}
+                                />
                             }
                         />
                         <Autocomplete
                             id='categoria'
-                            options={[]}
+                            options={categoriaProdutoOptions}
+                            value={categoria}
+                            onInputChange={(_, newValue) => setCategoria(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Categoria' />
+                                <TextField {...params} label='Categoria'
+                                    value={categoria}
+                                    onChange={e => setCategoria(e.target.value)}
+                                />
                             }
                         />
                         <Autocomplete
                             id='tipo'
-                            options={[]}
+                            options={tipoProdutoOptions}
+                            value={tipo}
+                            onInputChange={(_, newValue) => setTipo(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Tipo' />
+                                <TextField {...params} label='Tipo'
+                                    value={tipo}
+                                    onChange={e => setTipo(e.target.value)}
+                                />
                             }
                         />
                         <Autocomplete
                             id='capacidade'
-                            options={[]}
+                            options={capacidadeProdutoOptions}
+                            value={capacidade}
+                            onInputChange={(_, newValue) => setCapacidade(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Capacidade' />
+                                <TextField {...params} label='Capacidade'
+                                    value={capacidade}
+                                    onChange={e => setCapacidade(e.target.value)}
+                                />
                             }
                         />
                     </Box>
@@ -105,7 +141,7 @@ export const CadastroProduto = () => {
                                             size={20}
                                         />
                                         : undefined
-                                }>Cadastrar</Button>
+                                }>Avançar</Button>
                         </Box>
                     </Box>
                 </CardActions>

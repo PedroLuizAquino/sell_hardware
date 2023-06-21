@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             console.log('deu errado', result)
             toast.error('Erro ao Entrar')
         } else {
-
             console.log('deu certo', result)
             toast.success('Usuario Logado com sucesso')
             setAccessToken(result);
