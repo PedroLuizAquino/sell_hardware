@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useCallback, useMemo, useState } from 'react';
 import { AuthService, IAuth } from '../services/api/auth/AuthService';
+import { toast } from 'react-toastify';
 
 interface IAuthContextData {
     isAuthenticated: boolean;
@@ -23,9 +24,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         console.log('resultado ', result)
         if (result instanceof Error) {
             console.log('deu errado', result)
+            toast.error('Erro ao Entrar')
         } else {
 
             console.log('deu certo', result)
+            toast.success('Usuario Logado com sucesso')
             setAccessToken(result);
         }
     }, []);

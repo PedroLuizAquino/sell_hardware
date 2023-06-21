@@ -103,7 +103,7 @@ export const Navbar = ({
                     alignItems={'center'}
                 >
                     <Box padding={3}>
-                        <Button color='primary' variant='contained' onClick={isAuthenticated ? (() => navigate('/anunciar')) : (() => navigate('/login'))} endIcon={<MdSell />}>
+                        <Button color='primary' variant='contained' onClick={isAuthenticated ? (() => navigate('/cadastro-produto')) : (() => navigate('/login'))} endIcon={<MdSell />}>
                             Anuncie Aqui
                         </Button>
                     </Box>

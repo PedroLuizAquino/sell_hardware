@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDrawerContext } from '../shared/contexts';
 import { Dashboard } from '../pages/Dashboard/Dashboard';
 import { Login } from '../pages/forms/Login/Login';
-import { Anunciar, Cadastro, Home } from '../pages';
+import { CadastroProduto, Cadastro, Home, AnuncioProduto } from '../pages';
 
 
 export const AppRoutes = () => {
@@ -34,7 +34,8 @@ export const AppRoutes = () => {
             <Route path="/anuncio/detalhe/:id" element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/cadastrar' element={<Cadastro />} />
-            <Route path='/anunciar' element={<Anunciar />} />
+            <Route path='/cadastro-produto' element={<CadastroProduto />} />
+            <Route path='/anuncio-produto' element={<AnuncioProduto />} />
             <Route path="*" element={<Navigate to="/sellhardware" />} />
         </Routes>
     );

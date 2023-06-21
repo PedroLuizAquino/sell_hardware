@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardContent, CardActions, Button, CircularProgress, TextField, Typography } from "@mui/material"
+import { Card, CardContent, Autocomplete, CardActions, Button, CircularProgress, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import * as yup from 'yup';
 import { UsersService } from '../../../shared/services/api/users/UsersService';
@@ -12,7 +12,7 @@ const CreateUserSchema = yup.object().shape({
     password: yup.string().required().min(8),
 });
 
-export const Cadastro = () => {
+export const AnuncioProduto = () => {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -91,50 +91,31 @@ export const Cadastro = () => {
                             variant="h6"
                             align="center"
                         >
-                            Cadastre-se
+                            Anuncie Seu Produto
                         </Typography>
 
                         <TextField
-                            label='Nome'
-                            fullWidth
-                            disabled={isLoading}
-                            value={nome}
-                            onChange={e => setNome(e.target.value)}
+                            label="Preço"
                         />
 
-                        <TextField
-                            label='Email'
-                            fullWidth
-                            type="email"
-                            disabled={isLoading}
-                            error={!!emailError}
-                            helperText={emailError}
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            onKeyDown={() => setEmailError('')}
+                        <Autocomplete
+                            options={[]}
+                            renderInput={(params) =>
+                                <TextField {...params} label='Condição' />
+                            }
                         />
                         <TextField
-                            label='Senha'
-                            fullWidth
-                            type="password"
-                            value={password}
-                            error={!!passwordError}
-                            helperText={passwordError}
-                            disabled={isLoading}
-                            onChange={e => setPassword(e.target.value)}
-                            onKeyDown={() => setPasswordError('')}
+                            label="Quantidade"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                         />
+                        <TextField
+                            label="Observacoes"
+                            multiline
+                            rows={4}
 
-                        <TextField
-                            label='Confirmar Senha'
-                            fullWidth
-                            type="password"
-                            value={confirmPassword}
-                            error={!!confirmPasswordError}
-                            helperText={confirmPasswordError}
-                            disabled={isLoading}
-                            onKeyDown={() => setConfirmPasswordError('')}
-                            onChange={e => setConfirmPassword(e.target.value)}
                         />
                     </Box>
 
