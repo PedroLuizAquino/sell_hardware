@@ -3,6 +3,7 @@ import { Card, CardContent, CardActions, Button, CircularProgress, TextField, Ty
 import { Box } from "@mui/system"
 import * as yup from 'yup';
 import { UsersService } from '../../../shared/services/api/users/UsersService';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUserSchema = yup.object().shape({
     nome: yup.string().required(),
@@ -18,7 +19,7 @@ export const Cadastro = () => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -34,14 +35,13 @@ export const Cadastro = () => {
                         senha: password,
                         email: email,
                     })
-                        .then(result => {
-                            setIsLoading(false)
-                            console.log('Usuário criado com sucesso. ID:', result);
-
-                        })
-                        .catch((error) => {
-                            console.error('Erro ao criar usuário:', error.message);
-                        });
+                    setIsLoading(false);
+                    if (result instanceof Error) {
+                        console.log('deu errado', result)
+                    } else {
+                        console.log('deu certo', result)
+                        navigate('/login')
+                    }
                 }
                 fetchData();
             })

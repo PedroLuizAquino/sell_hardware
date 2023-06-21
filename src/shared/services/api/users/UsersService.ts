@@ -48,7 +48,7 @@ const getUsuarioById = async (id: number): Promise<IUsuarios | Error> => {
 
 };
 
-const cadastroUsuario = async (dados: {nome: string, senha: string, email: string}): Promise<number | Error> => {
+const cadastroUsuario = async (dados: {nome: string,  senha: string, email: string}): Promise<number | Error> => {
 
     try{
 
