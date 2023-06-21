@@ -1,8 +1,48 @@
-import { Input, InputLabel, Paper, TextField, Typography } from "@mui/material"
+import { useState } from 'react';
+import { Card, CardContent, CardActions, Button, Paper, TextField, Typography, CircularProgress } from "@mui/material"
 import { Box } from "@mui/system"
+import * as yup from 'yup';
+import { useAuthContext } from '../../../shared/contexts';
+import { useNavigate } from 'react-router-dom';
 
+
+const LoginSchema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().required().min(8),
+});
 
 export const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const { loginUser } = useAuthContext();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    const handleSubmit = () => {
+        setIsLoading(true);
+        LoginSchema
+            .validate({ email, password }, { abortEarly: false })
+            .then(dadosValidados => {
+                loginUser(dadosValidados.email, dadosValidados.password)
+                    .then(() => {
+                        setIsLoading(false)
+                        navigate('/sellhardware');
+                    })
+            })
+            .catch((errors: yup.ValidationError) => {
+                setIsLoading(false);
+                errors.inner.forEach(error => {
+                    if (error.path === 'email') {
+                        setEmailError('Email Invalido');
+                    } else if (error.path === 'password') {
+                        setPasswordError('Senha Invalido')
+                    }
+                });
+            });
+    };
 
     return (
         <Box
@@ -12,18 +52,74 @@ export const Login = () => {
             width={'80%'}
             height={'80%'}
             flex={1}
-            component={Paper}
-            elevation={5}
             display={'flex'}
             gap={1}
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent={'center'}
         >
-            <Typography fontFamily={'roboto'}     >Login</Typography>
+            <Card>
+                <CardContent>
+                    <Box
+                        display={'flex'}
+                        flexDirection={'column'}
+                        gap={2}
+                        width={250}
+                    >
+                        <Typography fontFamily={'roboto'}
+                            variant="h6"
+                            align="center"
+                        >
+                            Login
+                        </Typography>
 
-            <TextField label='Email' />
-            <TextField label='Senha' />
+                        <TextField
+                            label='Email'
+                            fullWidth
+                            type="email"
+                            value={email}
+                            disabled={isLoading}
+                            error={!!emailError}
+                            helperText={emailError}
+                            onChange={e => setEmail(e.target.value)}
+                            onKeyDown={() => setEmailError('')}
+                        />
+
+                        <TextField
+                            label='Senha'
+                            fullWidth
+                            type="password"
+                            value={password}
+                            disabled={isLoading}
+                            error={!!passwordError}
+                            helperText={passwordError}
+                            onChange={e => setPassword(e.target.value)}
+                            onKeyDown={() => setPasswordError('')}
+                        />
+                    </Box>
+
+                </CardContent>
+                <CardActions>
+                    <Box width={'100%'} display={'flex'} justifyContent={'center'}>
+                        <Box>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                disabled={isLoading}
+                                onClick={handleSubmit}
+                                endIcon={
+                                    isLoading ?
+                                        <CircularProgress
+                                            variant='indeterminate'
+                                            color='inherit'
+                                            size={20}
+                                        />
+                                        : undefined
+                                }>Entrar</Button>
+                        </Box>
+                    </Box>
+                </CardActions>
+            </Card>
 
         </Box>
     )

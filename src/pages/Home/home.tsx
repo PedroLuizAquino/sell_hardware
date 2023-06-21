@@ -24,16 +24,25 @@ export const Home = () => {
 
     return (
 
-        <Box padding={theme.spacing(4)} paddingTop={theme.spacing(10)} borderRadius={4} display={'flex'} gap={1}>
+        <Box
+            padding={theme.spacing(4)}
+            paddingTop={theme.spacing(10)}
+            borderRadius={4}
+            display={'flex'}
+            gap={3}
+            justifyContent={'center'}
+            flexDirection={'inherit'}
+            alignItems={'center'}
+        >
             {cardAnuncio.length > 0 ? (
                 cardAnuncio.map((anuncio) => (
-                    <Card sx={{ maxWidth: 300 }} key={anuncio.identify} >
+                    <Card sx={{ maxWidth: 400 }} key={anuncio.identify} >
                         <CardActionArea onClick={() => console.log("funciona")}>
                             <CardMedia
                                 component={'img'}
                                 height={'200'}
                                 alt="texto"
-                                src="imagem"
+                                src="https://cdn.discordapp.com/attachments/722058173095084064/1107496773930467358/FB_IMG_1674790029277.jpg"
                             />
                             <CardContent>
                                 <Typography component={'div'} variant="h6" > {anuncio.titulo}</Typography>

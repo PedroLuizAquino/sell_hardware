@@ -1,9 +1,9 @@
 import { Box } from '@mui/system';
 import { MdDensityMedium, MdSearch } from 'react-icons/md';
-import { useDrawerContext } from '../contexts';
+import { useAuthContext, useDrawerContext } from '../contexts';
 import logo from './logo_sellhardware.png';
 import { useNavigate } from 'react-router-dom';
-import { useTheme, Button, Paper, InputBase, IconButton, Avatar, Menu } from '@mui/material';
+import { useTheme, Button, Paper, InputBase, IconButton, Avatar, Menu, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Enviroment } from '../envionment';
 import { AnuncioService, IAnuncios } from '../services/api/anuncios/AnuncioService';
@@ -26,6 +26,7 @@ export const Navbar = ({
     const theme = useTheme();
     const [cardAnuncio, setCardAnuncio] = useState<IAnuncios[]>([]);
     const navigate = useNavigate();
+    const { isAuthenticated, lougout } = useAuthContext();
 
     const handleClickSearch = () => {
         if (!textoBusca) {
@@ -62,9 +63,11 @@ export const Navbar = ({
                 elevation={5}
             >
                 <Box display={'flex'}>
-                    <Box component={Button} display={'flex'}>
-                        <MdDensityMedium color='#ffffff' size={'2.5rem'} onClick={toggleDrawerOpen} style={{ cursor: "pointer" }} />
-                    </Box>
+                    {/*
+                        <Box component={Button} display={'flex'}>
+                            <MdDensityMedium color='#ffffff' size={'2.5rem'} onClick={toggleDrawerOpen} style={{ cursor: "pointer" }} />
+                        </Box>*/
+                    }
                     <Box component={Button} onClick={() => navigate('/sellhardware')} display={'flex'}>
                         <img src={logo} width={"50px"} alt='Logo Sell Hardware' />
                     </Box>
@@ -100,19 +103,37 @@ export const Navbar = ({
                     alignItems={'center'}
                 >
                     <Box padding={3}>
-                        <Button color='primary' variant='contained' endIcon={<MdSell />}>
+                        <Button color='primary' variant='contained' onClick={isAuthenticated ? (() => navigate('/anunciar')) : (() => navigate('/login'))} endIcon={<MdSell />}>
                             Anuncie Aqui
                         </Button>
                     </Box>
-                    <Box padding={1}>
-                        <IconButton sx={{ p: 0 }}>
-                            <Avatar />
+                    {isAuthenticated ? (
 
-                        </IconButton>
-                    </Box>
+                        <>
+                            <Box padding={1} component={Button} onClick={() => navigate('/login')}>
+                                <Avatar></Avatar>
+                            </Box>
+                            <Box padding={1} component={Button} onClick={lougout}>
+                                <Typography color={'#ffffff'}>Sair</Typography>
+                            </Box>
+                        </>
 
-                </Box>
-            </Box>
+                    ) : (
+                        <>
+                            <Box padding={1} component={Button} onClick={() => navigate('/login')}>
+                                <Typography color={'#ffffff'}>Login </Typography>
+                            </Box>
+                            <Box padding={1} component={Button} onClick={() => navigate('/cadastrar')}>
+                                <Typography color={'#ffffff'}>Cadastre-se</Typography>
+                            </Box>
+                        </>
+                    )}
+
+
+                </Box >
+
+            </Box >
+
             <Box>
                 {children}
             </Box>

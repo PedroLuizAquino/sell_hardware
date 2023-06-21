@@ -8,6 +8,7 @@ export interface IUsuarios {
     senha:string;
     email: string;
     celular: number;
+    password: string;
     rua: string;
     bairro: string;
     cidade: string;
@@ -47,7 +48,7 @@ const getUsuarioById = async (id: number): Promise<IUsuarios | Error> => {
 
 };
 
-const cadastroUsuario = async (dados: Omit<IUsuarios, 'id'>): Promise<number | Error> => {
+const cadastroUsuario = async (dados: {nome: string, senha: string, email: string}): Promise<number | Error> => {
 
     try{
 
@@ -62,13 +63,6 @@ const cadastroUsuario = async (dados: Omit<IUsuarios, 'id'>): Promise<number | E
 
         return new Error((error as {message: string}).message || 'Erro ao criar o usuario.');
     }
-};
-
-const loginUsuario =async () => { //post 
- };
-
-const logoutUsuario = async () => {
-    //post
 };
 
 const modifyUser = async (id: number, dados: IUsuarios): Promise<void | Error> => {
@@ -97,9 +91,7 @@ export const UsersService = {
 
     getUserAll,
     getUsuarioById,
-    cadastroUsuario,    
-    loginUsuario,
-    logoutUsuario,
+    cadastroUsuario,  
     modifyUser,
     deleteUser,    
 };
