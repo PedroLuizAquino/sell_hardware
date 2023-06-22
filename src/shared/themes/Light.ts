@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material"
+import { fontFamily } from "@mui/system";
 
 export const LightTheme = createTheme({
     palette: {
@@ -6,7 +7,7 @@ export const LightTheme = createTheme({
             main:  "#FF9900", 
             dark:  "#DE8500",
             light: "#FFAE00" ,
-            contrastText: "#FFFFFF" ,
+            contrastText: "#353535" ,
         },
         secondary: {
             main:  "#465EFF", 
