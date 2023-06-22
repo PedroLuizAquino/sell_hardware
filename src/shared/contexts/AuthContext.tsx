@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useCallback, useMemo, useState } from 'react';
 import { AuthService, IAuth } from '../services/api/auth/AuthService';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 interface IAuthContextData {
     isAuthenticated: boolean;
     lougout: () => void;
-    loginUser: (email: string, password: string) => Promise<string | void>;
+    loginUser: (email: string, password: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
@@ -14,21 +15,25 @@ type AuthProviderProps = {
     children: React.ReactNode;
 }
 
-
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [accessToken, setAccessToken] = useState<IAuth>();
 
     const handleLogin = useCallback(async (email: string, password: string) => {
+
         const result = await AuthService.loginUsuario(email, password);
         console.log('resultado ', result)
         if (result instanceof Error) {
-            console.log('deu errado', result)
             toast.error('Erro ao Entrar')
+            return false
         } else {
-            console.log('deu certo', result)
-            toast.success('Usuario Logado com sucesso')
-            setAccessToken(result);
+            if (result.response === true) {
+                toast.success('Usuario Logado com sucesso')
+                setAccessToken(result);
+                return true
+            } else {
+                toast.error('Erro ao Entrar')
+                return false
+            }
         }
     }, []);
 

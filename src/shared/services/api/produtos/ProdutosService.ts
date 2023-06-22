@@ -3,17 +3,12 @@ import { API } from "../axios";
 
 
 export interface IProdutos {
-    id: number;
-    titulo: string
-    date: Date;
-    quantidade: number;
-    descricao: string;
-    condicao: string;
-    userid:number;
-    mediaNotas: number;
-    meidaVotos: number;
-    produtoid: number;
-    ativo: boolean;
+    identify: number;
+    componente: string
+    marca: string;
+    categoria: string;
+    tipo: string;
+    capacidade: string;
 }
 
 const getProdutoAll = async (page = 1, filter=''): Promise<IProdutos[] | Error> => {
@@ -84,14 +79,13 @@ const getProdutoByCategoria = async (id: number): Promise<IProdutos | Error> => 
 
 };
 
-const createProduto = async (dados: Omit<IProdutos, 'id'>): Promise<number | Error> => {
+const createProduto = async (dados: {componente: string, marca: string, tipo: string, capacidade: string, categoria: string}): Promise<number | Error> => {
 
     try{
-
-        const{data} = await API.post<IProdutos>('/anunciar', dados);
-
+        const{data} = await API.post<IProdutos>('/cadastroProduto', dados);
         if(data){
-            return data.id;
+            console.log('data dentro', data)
+            return data.identify;
         }
 
         return new Error('Erro ao criar o anuncio.');

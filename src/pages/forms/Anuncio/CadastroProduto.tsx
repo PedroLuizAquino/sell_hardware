@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Card, CardContent, CardActions, Button, CircularProgress, TextField, Typography, Autocomplete } from "@mui/material"
 import { Box } from "@mui/system"
 import { capacidadeProdutoOptions, categoriaProdutoOptions, componenteProdutoOptions, fabricanteProdutoOptions, marcaProdutoOptions, tipoProdutoOptions } from '../../../shared/hooks/OptionsProduto';
+import { ProdutosService } from '../../../shared/services/api/produtos/ProdutosService';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 export const CadastroProduto = () => {
@@ -12,15 +15,31 @@ export const CadastroProduto = () => {
     const [capacidade, setCapacidade] = useState('');
     const [categoria, setCategoria] = useState('');
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate();
 
-
-    const handleCreateAnuncio = () => {
-        console.log('componente', componente)
-        console.log('fabricante', fabricante)
-        console.log('marca', marca)
-        console.log('tipo', tipo)
-        console.log('capacidade', capacidade)
-        console.log('categoria', categoria)
+    const handleCreateProduto = () => {
+        setIsLoading(true)
+        const fetchData = async () => {
+            setIsLoading(true);
+            const result = await ProdutosService.createProduto({
+                componente: componente,
+                marca: marca,
+                tipo: tipo,
+                capacidade: '',
+                categoria: categoria,
+            })
+            setIsLoading(false)
+            if (result instanceof Error) {
+                setIsLoading(false)
+                console.log('deu errado', result)
+                toast.error('Erro ao cadastrar')
+            } else {
+                //setIsLoading(false)
+                toast.success('Usuario Criado com sucesso')
+                navigate('/anuncio-produto')
+            }
+        }
+        fetchData();
     }
 
     return (
@@ -58,19 +77,6 @@ export const CadastroProduto = () => {
                             onInputChange={(_, newValue) => setComponente(newValue)}
                             renderInput={(params) =>
                                 <TextField {...params} label='Componente'
-                                />
-                            }
-                        />
-
-                        <Autocomplete
-                            id='fabricante'
-                            options={fabricanteProdutoOptions}
-                            value={fabricante}
-                            onInputChange={(_, newValue) => setFabricante(newValue)}
-                            renderInput={(params) =>
-                                <TextField {...params} label='Fabricante'
-                                    value={fabricante}
-                                    onChange={e => setFabricante(e.target.value)}
                                 />
                             }
                         />
@@ -132,7 +138,7 @@ export const CadastroProduto = () => {
                                 variant="contained"
                                 color="primary"
                                 disabled={isLoading}
-                                onClick={handleCreateAnuncio}
+                                onClick={handleCreateProduto}
                                 endIcon={
                                     isLoading ?
                                         <CircularProgress
@@ -141,7 +147,7 @@ export const CadastroProduto = () => {
                                             size={20}
                                         />
                                         : undefined
-                                }>Avançar</Button>
+                                }>Cadastrar</Button>
                         </Box>
                     </Box>
                 </CardActions>

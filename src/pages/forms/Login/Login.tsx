@@ -16,21 +16,21 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const { loginUser } = useAuthContext();
+    const { loginUser, isAuthenticated } = useAuthContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const handleSubmit = () => {
+
+    const handleSubmitLogin = () => {
         setIsLoading(true);
         LoginSchema
             .validate({ email, password }, { abortEarly: false })
-            .then(dadosValidados => {
-                loginUser(dadosValidados.email, dadosValidados.password)
-                    .then(() => {
-                        setIsLoading(false)
-                        navigate('/sellhardware');
-                    })
+            .then(async dadosValidados => {
+                if (await loginUser(dadosValidados.email, dadosValidados.password)) {
+                    navigate('/sellhardware');
+                }
+                setIsLoading(false);
             })
             .catch((errors: yup.ValidationError) => {
                 setIsLoading(false);
@@ -106,7 +106,7 @@ export const Login = () => {
                                 variant="contained"
                                 color="primary"
                                 disabled={isLoading}
-                                onClick={handleSubmit}
+                                onClick={handleSubmitLogin}
                                 endIcon={
                                     isLoading ?
                                         <CircularProgress
