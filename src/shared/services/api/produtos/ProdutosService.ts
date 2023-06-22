@@ -24,7 +24,6 @@ const getProdutoAll = async (page = 1, filter=''): Promise<IProdutos[] | Error> 
         return new Error('Erro ao listar os anuncios.');
 
     }catch(error){
-        console.error(error);
         return new Error((error as {message: string}).message || 'Erro ao listar os anuncios.');
     }
 };
@@ -84,7 +83,6 @@ const createProduto = async (dados: {componente: string, fabricante: string, tip
     try{
         const{data} = await API.post<any>('/cadastroProduto', dados);
         if(data){
-            console.log('data dentro', data)
             return data.data.identify.toString();
         }
 

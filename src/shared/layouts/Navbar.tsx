@@ -67,6 +67,9 @@ export const Navbar = ({
                         <Box component={Button} display={'flex'}>
                             <MdDensityMedium color='#ffffff' size={'2.5rem'} onClick={toggleDrawerOpen} style={{ cursor: "pointer" }} />
                         </Box>*/
+                        <Box width={'20px'}>
+
+                        </Box>
                     }
                     <Box component={Button} onClick={() => navigate('/sellhardware')} display={'flex'}>
                         <img src={logo} width={"50px"} alt='Logo Sell Hardware' />
@@ -75,8 +78,9 @@ export const Navbar = ({
                 <Box
                     padding={1}
                     paddingY={2}
+                    paddingLeft={2}
                     margin={1}
-                    width={'20%'}
+                    width={'25%'}
                     justifyContent={'end'}
                     display={'flex'}
                     alignItems={'center'}
@@ -86,6 +90,7 @@ export const Navbar = ({
                         sx={{ ml: 1, flex: 1 }}
                         placeholder={Enviroment.INPUT_DE_BUSCA}
                         value={textoBusca}
+                        fullWidth
                         onChange={(e) => aoMudarTextoBusca?.(e.target.value)}
                         inputProps={{ 'aria-label': 'Pesquisar' }}
                     />

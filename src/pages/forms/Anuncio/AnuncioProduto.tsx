@@ -22,7 +22,6 @@ export const AnuncioProduto = () => {
 
 
     const handleCreateUser = () => {
-        console.log('id produto', idProduto)
         setIsLoading(true)
         const fetchData = async () => {
             const result = await AnuncioService.createAnuncio({
@@ -35,7 +34,6 @@ export const AnuncioProduto = () => {
             })
             setIsLoading(false)
             if (result instanceof Error) {
-                console.log('deu errado', result)
                 toast.error('Erro ao Anunciar')
             } else {
                 toast.success('Anuncio Criado com sucesso')

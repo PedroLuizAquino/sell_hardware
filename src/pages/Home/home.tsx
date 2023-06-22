@@ -38,7 +38,7 @@ export const Home = () => {
             {cardAnuncio.length > 0 ? (
                 cardAnuncio.map((anuncio) => (
                     <Card sx={{ maxWidth: 250, flexBasis: "28%", margin: '15px' }} key={anuncio.identify} >
-                        <CardActionArea onClick={() => console.log("funciona")}>
+                        <CardActionArea>
                             <CardMedia
                                 component={'img'}
                                 height={'200'}
@@ -46,7 +46,7 @@ export const Home = () => {
                                 src="https://cdn.discordapp.com/attachments/722058173095084064/1107496773930467358/FB_IMG_1674790029277.jpg"
                             />
                             <CardContent>
-                                <Typography component={'div'} variant="h6" > {anuncio.titulo}</Typography>
+                                <Typography component={'div'} variant="h6" whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} > {anuncio.titulo}</Typography>
                                 <Box display={'flex'} gap={1} flexDirection={'row'}>
                                     <Rating precision={0.5} value={anuncio.mediaNotas || 2} readOnly />
                                     <Typography color={'#465EFF'} >  ( {anuncio.mediaVotos || 12} )  </Typography>

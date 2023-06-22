@@ -27,13 +27,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const loginUser = useCallback(async (email: string, password: string): Promise<boolean> => {
 
         const { response } = await AuthService.loginUsuario(email, password);
-        console.log('resultado ', response === false)
         if (response === false) {
             toast.error('Erro ao Entrar')
             return false
         } else {
             toast.success('Usuario Logado com sucesso')
-            console.log('id usuairo', response.toString())
             setIdUsuario(response)
             setAccessToken(true);
             return true

@@ -45,80 +45,87 @@ export const Login = () => {
 
     return (
         <Box
-            margin={10}
-            //marginX={10}
-            padding={1}
-            width={'80%'}
-            height={'80%'}
-            flex={1}
+            margin={2}
+            marginTop={10}
+            marginX={2}
+            padding={2}
+            marginLeft={45}
+            maxWidth={800}
+            height={400}
+            maxHeight={900}
             display={'flex'}
             gap={1}
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent={'center'}
+            borderRadius={'15px'}
+            component={Paper}
         >
-            <Card>
-                <CardContent>
-                    <Box
-                        display={'flex'}
-                        flexDirection={'column'}
-                        gap={2}
-                        width={250}
+
+            <CardContent>
+                <Box
+                    display={'flex'}
+                    flexDirection={'column'}
+                    gap={2}
+                    width={400}
+                >
+                    <Typography fontFamily={'roboto'}
+                        variant="h4"
+                        align="center"
                     >
-                        <Typography fontFamily={'roboto'}
-                            variant="h6"
-                            align="center"
-                        >
-                            Login
-                        </Typography>
+                        Login
+                    </Typography>
 
-                        <TextField
-                            label='Email'
-                            fullWidth
-                            type="email"
-                            value={email}
+                    <TextField
+                        label='Email'
+                        fullWidth
+                        type="email"
+                        value={email}
+                        disabled={isLoading}
+                        error={!!emailError}
+                        sx={{ width: "25vw" }}
+                        helperText={emailError}
+                        onChange={e => setEmail(e.target.value)}
+                        onKeyDown={() => setEmailError('')}
+                    />
+
+                    <TextField
+                        label='Senha'
+                        fullWidth
+                        type="password"
+                        value={password}
+                        sx={{ width: "25vw" }}
+                        disabled={isLoading}
+                        error={!!passwordError}
+                        helperText={passwordError}
+                        onChange={e => setPassword(e.target.value)}
+                        onKeyDown={() => setPasswordError('')}
+                    />
+                </Box>
+
+            </CardContent>
+            <CardActions>
+                <Box width={'100%'} display={'flex'} justifyContent={'center'}>
+                    <Box>
+                        <Button
+                            variant="contained"
+                            color="primary"
                             disabled={isLoading}
-                            error={!!emailError}
-                            helperText={emailError}
-                            onChange={e => setEmail(e.target.value)}
-                            onKeyDown={() => setEmailError('')}
-                        />
-
-                        <TextField
-                            label='Senha'
-                            fullWidth
-                            type="password"
-                            value={password}
-                            disabled={isLoading}
-                            error={!!passwordError}
-                            helperText={passwordError}
-                            onChange={e => setPassword(e.target.value)}
-                            onKeyDown={() => setPasswordError('')}
-                        />
+                            size='large'
+                            onClick={handleSubmitLogin}
+                            endIcon={
+                                isLoading ?
+                                    <CircularProgress
+                                        variant='indeterminate'
+                                        color='inherit'
+                                        size={20}
+                                    />
+                                    : undefined
+                            }>Entrar</Button>
                     </Box>
+                </Box>
+            </CardActions>
 
-                </CardContent>
-                <CardActions>
-                    <Box width={'100%'} display={'flex'} justifyContent={'center'}>
-                        <Box>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                disabled={isLoading}
-                                onClick={handleSubmitLogin}
-                                endIcon={
-                                    isLoading ?
-                                        <CircularProgress
-                                            variant='indeterminate'
-                                            color='inherit'
-                                            size={20}
-                                        />
-                                        : undefined
-                                }>Entrar</Button>
-                        </Box>
-                    </Box>
-                </CardActions>
-            </Card>
 
         </Box>
     )

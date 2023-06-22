@@ -13,7 +13,6 @@ const loginUsuario = async (email: string, senha: string): Promise<any> => {
         const{data} = await API.post(`/login`, { email: email, senha: senha });
 
         if(Boolean(data) !== false){
-            console.log('data', data )
             return data;
         } 
         return false

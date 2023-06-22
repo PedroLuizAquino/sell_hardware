@@ -28,11 +28,9 @@ export const CadastroProduto = () => {
                 capacidade: capacidade,
                 categoria: categoria,
             })
-            console.log('id da criacao do produto', result.toString())
             setIdProduto(result.toString())
             setIsLoading(false)
             if (result === 0) {
-                console.log('deu errado', result)
                 toast.error('Erro ao cadastrar um produto')
             } else {
                 toast.success('Produto Cadastrado com sucesso')

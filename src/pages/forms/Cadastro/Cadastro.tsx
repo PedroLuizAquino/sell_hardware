@@ -38,10 +38,8 @@ export const Cadastro = () => {
                     })
                     setIsLoading(false);
                     if (result instanceof Error) {
-                        console.log('deu errado', result)
                         toast.error('Erro ao cadastrar')
                     } else {
-                        console.log('deu certo', result)
                         toast.success('Usuario Criado com sucesso')
                         navigate('/login')
                     }
