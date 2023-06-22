@@ -7,7 +7,7 @@ import { useTheme, Button, Paper, InputBase, IconButton, Avatar, Menu, Typograph
 import { useState } from 'react';
 import { Enviroment } from '../envionment';
 import { AnuncioService, IAnuncios } from '../services/api/anuncios/AnuncioService';
-import { MdStore, MdSell, MdOutlineSell } from "react-icons/md";
+import { MdClear, MdSell } from "react-icons/md";
 import { toast } from 'react-toastify';
 
 
@@ -25,21 +25,31 @@ export const Navbar = ({
 }: NavebarProps) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const { IdUsuario, lougout, setBusca } = useAuthContext();
+    const [textoBarraBusca, setTextoBarraBusca] = useState(textoBusca);
+    const { IdUsuario, lougout, setBusca, busca } = useAuthContext();
 
     const handleClickSearch = () => {
-        if (!textoBusca) {
+        if (!textoBarraBusca) {
             return;
         }
-        AnuncioService.filtroAnuncio(textoBusca)
+        AnuncioService.filtroAnuncio(textoBarraBusca)
             .then((result) => {
                 if (result instanceof Error) {
-                    toast.error('Produto não entrontrado')
+                    toast.error('Anuncio não entrontrado')
                     return
                 } else {
-                    setBusca(result);
+                    if (result.length > 0) {
+                        setBusca(result);
+                    } else {
+                        toast.error('Anuncio não entrontrado')
+                    }
                 }
             })
+    }
+
+    const handleClickCancelSearch = () => {
+        setBusca([]);
+        setTextoBarraBusca('')
     }
 
     return (
@@ -87,11 +97,14 @@ export const Navbar = ({
                     <InputBase
                         sx={{ ml: 1, flex: 1, width: '25vw' }}
                         placeholder={Enviroment.INPUT_DE_BUSCA}
-                        value={textoBusca}
+                        value={textoBarraBusca}
                         fullWidth
-                        onChange={(e) => aoMudarTextoBusca?.(e.target.value)}
+                        onChange={(e) => setTextoBarraBusca?.(e.target.value)}
                         inputProps={{ 'aria-label': 'Pesquisar' }}
                     />
+                    {busca.length > 0 ? (<IconButton type="button" sx={{ p: '10px' }} aria-label="Pesquisar" onClick={handleClickCancelSearch}>
+                        <MdClear />
+                    </IconButton>) : (<></>)}
                     <IconButton type="button" sx={{ p: '10px' }} aria-label="Pesquisar" onClick={handleClickSearch}>
                         <MdSearch />
                     </IconButton>
@@ -113,7 +126,7 @@ export const Navbar = ({
                     {!!IdUsuario ? (
                         <>
                             <Box padding={1} component={Button}>
-                                <Avatar></Avatar>
+                                <Avatar />
                             </Box>
                             <Box padding={1} component={Button} onClick={lougout}>
                                 <Typography color={'#ffffff'}>Sair</Typography>
