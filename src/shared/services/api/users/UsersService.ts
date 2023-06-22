@@ -26,7 +26,6 @@ const getUserAll = async (filter: string): Promise<IUsuarios[] | Error> => {
         return new Error('Erro ao listar os usuarios.');
 
     }catch(error){
-        console.error(error);
         return new Error((error as {message: string}).message || 'Erro ao listar os usuarios.');
     }
 };
