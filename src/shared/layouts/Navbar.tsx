@@ -110,7 +110,7 @@ export const Navbar = ({
                     {isAuthenticated ? (
 
                         <>
-                            <Box padding={1} component={Button} onClick={() => navigate('/login')}>
+                            <Box padding={1} component={Button}     >
                                 <Avatar></Avatar>
                             </Box>
                             <Box padding={1} component={Button} onClick={lougout}>

@@ -1,41 +1,41 @@
 import { useState } from 'react';
 import { Card, CardContent, CardActions, Button, CircularProgress, TextField, Typography, Autocomplete } from "@mui/material"
 import { Box } from "@mui/system"
-import { capacidadeProdutoOptions, categoriaProdutoOptions, componenteProdutoOptions, fabricanteProdutoOptions, marcaProdutoOptions, tipoProdutoOptions } from '../../../shared/hooks/OptionsProduto';
+import { capacidadeProdutoOptions, categoriaProdutoOptions, componenteProdutoOptions, fabricanteProdutoOptions, tipoProdutoOptions } from '../../../shared/hooks/OptionsProduto';
 import { ProdutosService } from '../../../shared/services/api/produtos/ProdutosService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../../../shared/contexts';
 
 
 export const CadastroProduto = () => {
     const [componente, setComponente] = useState('');
     const [fabricante, setFabricante] = useState('');
-    const [marca, setMarca] = useState('');
     const [tipo, setTipo] = useState('');
     const [capacidade, setCapacidade] = useState('');
     const [categoria, setCategoria] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
+    const { setIdProduto } = useAuthContext();
 
     const handleCreateProduto = () => {
         setIsLoading(true)
         const fetchData = async () => {
-            setIsLoading(true);
             const result = await ProdutosService.createProduto({
                 componente: componente,
-                marca: marca,
+                fabricante: fabricante,
                 tipo: tipo,
-                capacidade: '',
+                capacidade: capacidade,
                 categoria: categoria,
             })
+            console.log('id da criacao do produto', result.toString())
+            setIdProduto(result.toString())
             setIsLoading(false)
-            if (result instanceof Error) {
-                setIsLoading(false)
+            if (result === 0) {
                 console.log('deu errado', result)
-                toast.error('Erro ao cadastrar')
+                toast.error('Erro ao cadastrar um produto')
             } else {
-                //setIsLoading(false)
-                toast.success('Usuario Criado com sucesso')
+                toast.success('Produto Cadastrado com sucesso')
                 navigate('/anuncio-produto')
             }
         }
@@ -81,14 +81,14 @@ export const CadastroProduto = () => {
                             }
                         />
                         <Autocomplete
-                            id='marca'
-                            options={marcaProdutoOptions}
-                            value={marca}
-                            onInputChange={(_, newValue) => setMarca(newValue)}
+                            id='fabricante'
+                            options={fabricanteProdutoOptions}
+                            value={fabricante}
+                            onInputChange={(_, newValue) => setFabricante(newValue)}
                             renderInput={(params) =>
-                                <TextField {...params} label='Marca'
-                                    value={marca}
-                                    onChange={e => setMarca(e.target.value)}
+                                <TextField {...params} label='Fabricante'
+                                    value={fabricante}
+                                    onChange={e => setFabricante(e.target.value)}
                                 />
                             }
                         />

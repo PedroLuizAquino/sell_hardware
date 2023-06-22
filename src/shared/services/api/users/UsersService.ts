@@ -48,20 +48,20 @@ const getUsuarioById = async (id: number): Promise<IUsuarios | Error> => {
 
 };
 
-const cadastroUsuario = async (dados: {nome: string,  senha: string, email: string}): Promise<number | Error> => {
+const cadastroUsuario = async (dados: {nome: string,  senha: string, email: string}) => {
 
     try{
 
-        const{data} = await API.post<IUsuarios>('/cadastroUsuario', dados);
+        const{data} = await API.post<any>('/cadastroUsuario', dados);
 
         if(data){
-            return data.identify;
+            return data.data.identify.toString();
         }
 
-        return new Error('Erro ao criar o usuario.');
+        return 0
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao criar o usuario.');
+        return 0
     }
 };
 

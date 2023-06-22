@@ -7,19 +7,19 @@ export interface IAuth {
 }
 
 
-const loginUsuario = async (email: string, senha: string): Promise<IAuth | Error> => { 
+const loginUsuario = async (email: string, senha: string): Promise<any> => { 
     try{
 
         const{data} = await API.post(`/login`, { email: email, senha: senha });
 
-        if(Boolean(data) === true){
+        if(Boolean(data) !== false){
             console.log('data', data )
             return data;
         } 
-        return new Error('Erro no login.');
+        return false
     }catch(error: any){
 
-        return new Error((error as {message: string}).message || error.message);
+        return false
     }
 };
 

@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 interface IAuthContextData {
     isAuthenticated: boolean;
     lougout: () => void;
+    idProduto: string;
+    setIdProduto: (id: string) => void;
+    IdUsuario: string;
+    setIdUsuario: (id: string) => void;
     loginUser: (email: string, password: string) => Promise<boolean>;
 }
 
@@ -16,29 +20,29 @@ type AuthProviderProps = {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [accessToken, setAccessToken] = useState<IAuth>();
+    const [accessToken, setAccessToken] = useState<boolean>(false);
+    const [idProduto, setIdProduto] = useState<string>('');
+    const [IdUsuario, setIdUsuario] = useState<string>('');
 
-    const handleLogin = useCallback(async (email: string, password: string) => {
+    const loginUser = useCallback(async (email: string, password: string): Promise<boolean> => {
 
-        const result = await AuthService.loginUsuario(email, password);
-        console.log('resultado ', result)
-        if (result instanceof Error) {
+        const { response } = await AuthService.loginUsuario(email, password);
+        console.log('resultado ', response === false)
+        if (response === false) {
             toast.error('Erro ao Entrar')
             return false
         } else {
-            if (result.response === true) {
-                toast.success('Usuario Logado com sucesso')
-                setAccessToken(result);
-                return true
-            } else {
-                toast.error('Erro ao Entrar')
-                return false
-            }
+            toast.success('Usuario Logado com sucesso')
+            console.log('id usuairo', response.toString())
+            setIdUsuario(response)
+            setAccessToken(true);
+            return true
         }
+
     }, []);
 
     const handleLogout = useCallback(() => {
-        setAccessToken(undefined);
+        setAccessToken(false);
         window.location.reload()
     }, []);
 
@@ -46,7 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loginUser: handleLogin, lougout: handleLogout }}>
+        <AuthContext.Provider value={{ isAuthenticated, idProduto, setIdProduto, IdUsuario, setIdUsuario, loginUser: loginUser, lougout: handleLogout }}>
             {children}
         </AuthContext.Provider>
     );

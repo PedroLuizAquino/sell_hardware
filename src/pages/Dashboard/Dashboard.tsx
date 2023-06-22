@@ -22,7 +22,7 @@ export const Dashboard = ({ children }: DashboardProps) => {
             aoMudarTextoBusca={texto => setSearchParams({ busca: texto }, { replace: true })}
         >
             <MenuLateral>
-                <Box height={"100%"} width={"100%"}>
+                <Box height={"100vh"} width={"100vw"}>
                     {children}
                 </Box>
             </MenuLateral>

@@ -5,7 +5,7 @@ import { API } from "../axios";
 export interface IProdutos {
     identify: number;
     componente: string
-    marca: string;
+    fabricante: string;
     categoria: string;
     tipo: string;
     capacidade: string;
@@ -79,19 +79,19 @@ const getProdutoByCategoria = async (id: number): Promise<IProdutos | Error> => 
 
 };
 
-const createProduto = async (dados: {componente: string, marca: string, tipo: string, capacidade: string, categoria: string}): Promise<number | Error> => {
+const createProduto = async (dados: {componente: string, fabricante: string, tipo: string, capacidade: string, categoria: string}) => {
 
     try{
-        const{data} = await API.post<IProdutos>('/cadastroProduto', dados);
+        const{data} = await API.post<any>('/cadastroProduto', dados);
         if(data){
             console.log('data dentro', data)
-            return data.identify;
+            return data.data.identify.toString();
         }
 
-        return new Error('Erro ao criar o anuncio.');
+        return 0
     }catch(error){
 
-        return new Error((error as {message: string}).message || 'Erro ao criar o anuncio.');
+        return 0
     }
 };
 

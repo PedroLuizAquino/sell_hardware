@@ -25,18 +25,19 @@ export const Home = () => {
     return (
 
         <Box
-            padding={theme.spacing(4)}
-            paddingTop={theme.spacing(10)}
+            padding={theme.spacing(50)}
+            paddingTop={theme.spacing(4)}
             borderRadius={4}
             display={'flex'}
-            gap={3}
             justifyContent={'center'}
             flexDirection={'inherit'}
             alignItems={'center'}
+            flexWrap={'wrap'}
+            boxSizing={'border-box'}
         >
             {cardAnuncio.length > 0 ? (
                 cardAnuncio.map((anuncio) => (
-                    <Card sx={{ maxWidth: 400 }} key={anuncio.identify} >
+                    <Card sx={{ maxWidth: 250, flexBasis: "28%", margin: '15px' }} key={anuncio.identify} >
                         <CardActionArea onClick={() => console.log("funciona")}>
                             <CardMedia
                                 component={'img'}
@@ -51,7 +52,7 @@ export const Home = () => {
                                     <Typography color={'#465EFF'} >  ( {anuncio.mediaVotos || 12} )  </Typography>
                                 </Box>
                                 <Box>
-                                    <Typography component={'div'} variant="h6" > R${anuncio.preco}</Typography>
+                                    <Typography component={'div'} variant="h6" sx={{ wordBreak: 'keep-all' }} > R${anuncio.preco}</Typography>
                                 </Box>
                             </CardContent>
                         </CardActionArea>

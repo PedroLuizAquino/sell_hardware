@@ -69,7 +69,7 @@ const filtroAnuncio = async (filter : string) : Promise<IAnuncios[] | Error> => 
 }
 
 
-const createAnuncio = async (dados: Omit<IAnuncios, 'id'>): Promise<number | Error> => {
+const createAnuncio = async (dados: {preco: string, condicao: string, quantidade: number, titulo: string, id_produto: number, id_usuario: number;}): Promise<number | Error> => {
 
     try{
 

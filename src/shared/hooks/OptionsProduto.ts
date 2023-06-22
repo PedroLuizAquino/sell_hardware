@@ -1,7 +1,9 @@
 export const componenteProdutoOptions = [
-    'Processador', 
+    'Processador Intel', 
+    'Processador AMD', 
+    'Placa de Video AMD',
+    'Placa de Video NVidia',
     'Placa Mãe',
-    'Placa de Video',
     'Memoria', 
     'Armazenamento',
     'Fonte', 
@@ -15,13 +17,6 @@ export const fabricanteProdutoOptions = [
     'Kingston', 
     'Kingston Fury',
     'Seagate', 
-    'Nenhuma das alternativas', 
-];
-
-export const marcaProdutoOptions = [
-    'Intel', 
-    'AMD',
-    'NVidia', 
     'Nenhuma das alternativas', 
 ];
 
@@ -39,7 +34,7 @@ export const capacidadeProdutoOptions = [
     '16 GB',  
     '36 GB', 
     '500 GB', 
-    '1 T',   
+    '1 TB',   
     'Nenhuma das alternativas', 
 ];
 

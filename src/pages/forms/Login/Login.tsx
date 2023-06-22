@@ -16,10 +16,9 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const { loginUser, isAuthenticated } = useAuthContext();
+    const { loginUser, setIdUsuario } = useAuthContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
-
 
 
     const handleSubmitLogin = () => {
