@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Box } from "@mui/system";
-import { Card, CardActionArea, CardContent, CardMedia, Rating, Typography, useTheme } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, Rating, Tooltip, Typography, useTheme } from "@mui/material";
 import { useAuthContext, useCardContext } from "../../shared/contexts";
 import { AnuncioService, IAnuncios } from "../../shared/services/api/anuncios/AnuncioService";
 
@@ -52,7 +52,9 @@ export const Home = () => {
                                 src="https://cdn.discordapp.com/attachments/722058173095084064/1107496773930467358/FB_IMG_1674790029277.jpg"
                             />
                             <CardContent>
-                                <Typography component={'div'} variant="h6" whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} > {anuncio.titulo}</Typography>
+                                <Tooltip title={anuncio.titulo} placement="top" >
+                                    <Typography component={'div'} variant="h6" whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} > {anuncio.titulo}</Typography>
+                                </Tooltip>
                                 <Box display={'flex'} gap={1} flexDirection={'row'}>
                                     <Rating precision={0.5} value={anuncio.mediaNotas || 2} readOnly />
                                     <Typography color={'#465EFF'} >  ( {anuncio.mediaVotos || 12} )  </Typography>
