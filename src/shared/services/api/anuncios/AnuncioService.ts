@@ -52,19 +52,19 @@ const getAnuncioById = async (id: number): Promise<IAnuncios | Error> => {
     }
 };
 
-const filtroAnuncio = async (filter : string) : Promise<IAnuncios[] | Error> => {
+const filtroAnuncio = async (filter : string) : Promise<IAnuncios[]> => {
     try{
 
         const{data} = await API.get(`/filtrarAnuncio/?titulo=${filter}`);
 
-        if(data){
-            return data;
-        }
+        if (Array.isArray(data.data)) {
+            return data.data;
+          }
 
-        return new Error('Erro ao filtrar o anuncio.');
+        return [];
     }catch(error: any){
 
-        return new Error((error as {message: string}).message || error.message);
+        return  [];
     }
 }
 

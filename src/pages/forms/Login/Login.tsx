@@ -27,7 +27,9 @@ export const Login = () => {
             .validate({ email, password }, { abortEarly: false })
             .then(async dadosValidados => {
                 if (await loginUser(dadosValidados.email, dadosValidados.password)) {
+                    console.log('idUsuario', IdUsuario)
                     navigate('/sellhardware');
+                    console.log('idUsuario', IdUsuario)
                 }
                 setIsLoading(false);
             })

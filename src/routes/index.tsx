@@ -32,6 +32,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/sellhardware" element={<Home />} />
+            <Route path='/sellhardware?busca=munitor' element={''} />
             <Route path="/anuncio/detalhe/:id" element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/cadastrar' element={<Cadastro />} />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Box } from "@mui/system";
 import { Card, CardActionArea, CardContent, CardMedia, Rating, Typography, useTheme } from "@mui/material";
-import { useCardContext } from "../../shared/contexts";
+import { useAuthContext, useCardContext } from "../../shared/contexts";
 import { AnuncioService, IAnuncios } from "../../shared/services/api/anuncios/AnuncioService";
 
 
@@ -11,6 +11,7 @@ export const Home = () => {
     const theme = useTheme();
     const [cardAnuncio, setCardAnuncio] = useState<IAnuncios[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { busca } = useAuthContext();
 
 
     useEffect(() => {
@@ -18,9 +19,14 @@ export const Home = () => {
             setIsLoading(true);
             const result = await AnuncioService.getAnuncioAll()
             setCardAnuncio(result)
+            if (busca.length > 0) {
+                setCardAnuncio(busca);
+            }
         }
         fetchData();
-    }, []);
+
+
+    }, [busca]);
 
     return (
 
@@ -37,7 +43,7 @@ export const Home = () => {
         >
             {cardAnuncio.length > 0 ? (
                 cardAnuncio.map((anuncio) => (
-                    <Card sx={{ maxWidth: 250, flexBasis: "28%", margin: '15px' }} key={anuncio.identify} >
+                    <Card sx={{ maxWidth: 250, flexBasis: "28%", margin: '15px', minWidth: 200 }} key={anuncio.identify} >
                         <CardActionArea>
                             <CardMedia
                                 component={'img'}

@@ -16,7 +16,7 @@ export const CadastroProduto = () => {
     const [categoria, setCategoria] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
-    const { setIdProduto, isAuthenticated } = useAuthContext();
+    const { setIdProduto } = useAuthContext();
 
     const handleCreateProduto = () => {
         setIsLoading(true)

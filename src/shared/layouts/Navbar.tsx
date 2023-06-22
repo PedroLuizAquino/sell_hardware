@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Enviroment } from '../envionment';
 import { AnuncioService, IAnuncios } from '../services/api/anuncios/AnuncioService';
 import { MdStore, MdSell, MdOutlineSell } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 
 
@@ -22,11 +23,9 @@ export const Navbar = ({
     textoBusca = '',
     aoMudarTextoBusca,
 }: NavebarProps) => {
-    const { toggleDrawerOpen } = useDrawerContext();
     const theme = useTheme();
-    const [cardAnuncio, setCardAnuncio] = useState<IAnuncios[]>([]);
     const navigate = useNavigate();
-    const { IdUsuario, lougout } = useAuthContext();
+    const { IdUsuario, lougout, setBusca } = useAuthContext();
 
     const handleClickSearch = () => {
         if (!textoBusca) {
@@ -35,11 +34,10 @@ export const Navbar = ({
         AnuncioService.filtroAnuncio(textoBusca)
             .then((result) => {
                 if (result instanceof Error) {
-                    alert(result.message);
+                    toast.error('Produto não entrontrado')
                     return
                 } else {
-                    setCardAnuncio(result);
-
+                    setBusca(result);
                 }
             })
     }
@@ -113,9 +111,8 @@ export const Navbar = ({
                         </Button>
                     </Box>
                     {!!IdUsuario ? (
-
                         <>
-                            <Box padding={1} component={Button}     >
+                            <Box padding={1} component={Button}>
                                 <Avatar></Avatar>
                             </Box>
                             <Box padding={1} component={Button} onClick={lougout}>
