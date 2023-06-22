@@ -41,6 +41,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const handleLogout = useCallback(() => {
         setAccessToken(false);
+        setIdProduto('');
+        setIdUsuario('');
         window.location.reload()
     }, []);
 

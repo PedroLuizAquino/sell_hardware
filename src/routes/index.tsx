@@ -9,7 +9,7 @@ import { CadastroProduto, Cadastro, Home, AnuncioProduto } from '../pages';
 
 export const AppRoutes = () => {
     const { setDrawerOption } = useDrawerContext();
-    const { isAuthenticated } = useAuthContext();
+    const { IdUsuario, idProduto } = useAuthContext();
 
 
     useEffect(() => {
@@ -35,8 +35,8 @@ export const AppRoutes = () => {
             <Route path="/anuncio/detalhe/:id" element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/cadastrar' element={<Cadastro />} />
-            <Route path='/cadastro-produto' element={isAuthenticated ? <CadastroProduto /> : <Navigate to='/login' />} />
-            <Route path='/anuncio-produto' element={isAuthenticated ? <AnuncioProduto /> : <Navigate to='/login' />} />
+            <Route path='/cadastro-produto' element={!!IdUsuario ? <CadastroProduto /> : <Navigate to='/login' />} />
+            <Route path='/anuncio-produto' element={!!idProduto && !!IdUsuario ? <AnuncioProduto /> : <Navigate to='/cadastro-produto' />} />
             <Route path="*" element={<Navigate to="/sellhardware" />} />
         </Routes>
     );

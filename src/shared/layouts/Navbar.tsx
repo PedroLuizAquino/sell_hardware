@@ -26,7 +26,7 @@ export const Navbar = ({
     const theme = useTheme();
     const [cardAnuncio, setCardAnuncio] = useState<IAnuncios[]>([]);
     const navigate = useNavigate();
-    const { isAuthenticated, lougout } = useAuthContext();
+    const { IdUsuario, lougout } = useAuthContext();
 
     const handleClickSearch = () => {
         if (!textoBusca) {
@@ -87,7 +87,7 @@ export const Navbar = ({
                     style={{ backgroundColor: '#ffffff', borderRadius: '4px', justifyContent: 'center' }}
                 >
                     <InputBase
-                        sx={{ ml: 1, flex: 1 }}
+                        sx={{ ml: 1, flex: 1, width: '25vw' }}
                         placeholder={Enviroment.INPUT_DE_BUSCA}
                         value={textoBusca}
                         fullWidth
@@ -108,11 +108,11 @@ export const Navbar = ({
                     alignItems={'center'}
                 >
                     <Box padding={3}>
-                        <Button color='primary' variant='contained' onClick={isAuthenticated ? (() => navigate('/cadastro-produto')) : (() => navigate('/login'))} endIcon={<MdSell />}>
+                        <Button color='primary' variant='contained' onClick={!!IdUsuario ? (() => navigate('/cadastro-produto')) : (() => navigate('/login'))} endIcon={<MdSell />}>
                             Anuncie Aqui
                         </Button>
                     </Box>
-                    {isAuthenticated ? (
+                    {!!IdUsuario ? (
 
                         <>
                             <Box padding={1} component={Button}     >

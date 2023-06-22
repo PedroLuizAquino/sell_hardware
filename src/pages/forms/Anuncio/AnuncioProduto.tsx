@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardContent, Autocomplete, CardActions, Button, CircularProgress, TextField, Typography } from "@mui/material"
+import { Card, CardContent, Autocomplete, CardActions, Button, CircularProgress, TextField, Typography, Paper } from "@mui/material"
 import { Box } from "@mui/system"
 import * as yup from 'yup';
 import { UsersService } from '../../../shared/services/api/users/UsersService';
@@ -45,95 +45,98 @@ export const AnuncioProduto = () => {
     }
     return (
         <Box
-            margin={10}
-            padding={1}
-            width={'80%'}
-            height={'80%'}
-            flex={1}
+            margin={2}
+            marginTop={5}
+            marginX={2}
+            padding={2}
+            marginLeft={45}
+            maxWidth={800}
+            height={550}
+            maxHeight={900}
             display={'flex'}
             gap={1}
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent={'center'}
+            borderRadius={'15px'}
+            component={Paper}
         >
-            <Card>
-                <CardContent>
-                    <Box
-                        display={'flex'}
-                        flexDirection={'column'}
-                        gap={2}
-                        width={250}
+            <CardContent>
+                <Box
+                    display={'flex'}
+                    flexDirection={'column'}
+                    gap={2}
+                    width={400}
+                >
+                    <Typography fontFamily={'roboto'}
+                        variant="h4"
+                        align="center"
                     >
-                        <Typography fontFamily={'roboto'}
-                            variant="h6"
-                            align="center"
-                        >
-                            Anuncie Seu Produto
-                        </Typography>
+                        Anuncie Seu Produto
+                    </Typography>
 
-                        <TextField
-                            label="Titulo do anuncio"
-                            value={titulo}
-                            onChange={e => setTitulo(e.target.value)}
-                        />
+                    <TextField
+                        label="Titulo do anuncio"
+                        value={titulo}
+                        onChange={e => setTitulo(e.target.value)}
+                    />
 
 
-                        <TextField
-                            label="Preço"
-                            value={preco}
-                            onChange={e => setPreco(e.target.value)}
-                        />
+                    <TextField
+                        label="Preço"
+                        value={preco}
+                        onChange={e => setPreco(e.target.value)}
+                    />
 
-                        <Autocomplete
-                            options={condicaoProdutoOptions}
-                            value={condicao}
-                            onInputChange={(_, newValue) => setCondicao(newValue)}
-                            renderInput={(params) =>
-                                <TextField {...params} label='Condição' />
-                            }
-                        />
-                        <TextField
-                            label="Quantidade"
-                            type="number"
-                            value={quantidade}
-                            onChange={e => setQuantidade(Number(e.target.value))}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <Autocomplete
-                            options={observacoesAnuncioOptions}
-                            value={observacao}
-                            onInputChange={(_, newValue) => setObservacao(newValue)}
-                            renderInput={(params) =>
-                                <TextField {...params} label='Tag' />
-                            }
-                        />
+                    <Autocomplete
+                        options={condicaoProdutoOptions}
+                        value={condicao}
+                        onInputChange={(_, newValue) => setCondicao(newValue)}
+                        renderInput={(params) =>
+                            <TextField {...params} label='Condição' />
+                        }
+                    />
+                    <TextField
+                        label="Quantidade"
+                        type="number"
+                        value={quantidade}
+                        onChange={e => setQuantidade(Number(e.target.value))}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <Autocomplete
+                        options={observacoesAnuncioOptions}
+                        value={observacao}
+                        onInputChange={(_, newValue) => setObservacao(newValue)}
+                        renderInput={(params) =>
+                            <TextField {...params} label='Tag' />
+                        }
+                    />
+                </Box>
+
+            </CardContent>
+            <CardActions>
+                <Box width={'100%'} display={'flex'} justifyContent={'center'}>
+                    <Box>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={isLoading}
+                            onClick={handleCreateUser}
+                            size='large'
+                            endIcon={
+                                isLoading ?
+                                    <CircularProgress
+                                        variant='indeterminate'
+                                        color='inherit'
+                                        size={20}
+                                    />
+                                    : undefined
+                            }>Anunciar</Button>
                     </Box>
-
-                </CardContent>
-                <CardActions>
-                    <Box width={'100%'} display={'flex'} justifyContent={'center'}>
-                        <Box>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                disabled={isLoading}
-                                onClick={handleCreateUser}
-                                endIcon={
-                                    isLoading ?
-                                        <CircularProgress
-                                            variant='indeterminate'
-                                            color='inherit'
-                                            size={20}
-                                        />
-                                        : undefined
-                                }>Anunciar</Button>
-                        </Box>
-                    </Box>
-                </CardActions>
-            </Card>
-
+                </Box>
+            </CardActions>
         </Box>
     )
 }

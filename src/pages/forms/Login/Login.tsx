@@ -16,7 +16,7 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const { loginUser, setIdUsuario } = useAuthContext();
+    const { loginUser, IdUsuario } = useAuthContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
 
@@ -61,7 +61,6 @@ export const Login = () => {
             borderRadius={'15px'}
             component={Paper}
         >
-
             <CardContent>
                 <Box
                     display={'flex'}
