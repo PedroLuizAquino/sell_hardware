@@ -10,6 +10,7 @@ const CreateUserSchema = yup.object().shape({
     nome: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required().min(8),
+    confirmPassword: yup.string().required().min(8),
 });
 
 export const Cadastro = () => {
@@ -17,6 +18,7 @@ export const Cadastro = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [nomeError, setNomeError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
@@ -27,7 +29,7 @@ export const Cadastro = () => {
     const handleCreateUser = () => {
         setIsLoading(true)
         CreateUserSchema
-            .validate({ email, password, nome }, { abortEarly: false })
+            .validate({ email, password, nome, confirmPassword }, { abortEarly: false })
             .then(dadosValidados => {
                 const fetchData = async () => {
                     setIsLoading(true);
@@ -53,8 +55,9 @@ export const Cadastro = () => {
                         setEmailError('Email Invalido');
                     } else if (error.path === 'password') {
                         setPasswordError('Senha Invalido')
+                    } else if (error.path === 'nome') {
+                        setNomeError('Nome Invalido')
                     }
-
                     if (password !== confirmPassword) {
                         setPasswordError('As senhas não se conhecidem')
                         setConfirmPasswordError('As senhas não se conhecidem')
@@ -89,7 +92,7 @@ export const Cadastro = () => {
                     gap={2}
                     width={400}
                 >
-                    <Typography fontFamily={'roboto'}
+                    <Typography
                         variant="h4"
                         align="center"
                     >
@@ -100,9 +103,12 @@ export const Cadastro = () => {
                         label='Nome'
                         fullWidth
                         disabled={isLoading}
+                        helperText={nomeError}
+                        error={!!nomeError}
                         sx={{ width: "25vw" }}
                         value={nome}
                         onChange={e => setNome(e.target.value)}
+                        onKeyDown={() => setNomeError('')}
                     />
 
                     <TextField

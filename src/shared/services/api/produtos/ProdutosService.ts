@@ -15,7 +15,7 @@ const getProdutoAll = async (page = 1, filter=''): Promise<IProdutos[] | Error> 
     try{
         const urlRelativa = `/buscaProduto`;
 
-        const {data, headers} = await API.get(urlRelativa);
+        const {data} = await API.get(urlRelativa);
 
         if(data) {
             return data

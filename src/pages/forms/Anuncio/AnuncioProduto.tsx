@@ -68,7 +68,7 @@ export const AnuncioProduto = () => {
                     gap={2}
                     width={400}
                 >
-                    <Typography fontFamily={'roboto'}
+                    <Typography
                         variant="h4"
                         align="center"
                     >

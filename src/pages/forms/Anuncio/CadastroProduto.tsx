@@ -65,7 +65,7 @@ export const CadastroProduto = () => {
                     gap={2}
                     width={400}
                 >
-                    <Typography fontFamily={'roboto'}
+                    <Typography
                         variant="h4"
                         align="center"
                     >
